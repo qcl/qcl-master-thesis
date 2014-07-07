@@ -22,7 +22,7 @@
 \DeclareOption{onehalfspacing}{\gdef\@setspacing{\onehalfspacing}}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
 \ProcessOptions\relax
-\LoadClass[a4paper,12pt]{book}
+\LoadClass[a4paper,12pt, oneside]{book}
 
 % Required packages
 \RequirePackage[top=3cm,left=3cm,bottom=2cm,right=3cm]{geometry}
@@ -43,7 +43,7 @@
 \DeclareRobustCommand{\abstractname}[2]{\gdef\@abstractnameen{#1}\gdef\@abstractnamezh{#2}}
 \DeclareRobustCommand{\acknowledgements}[2]{\gdef\@acknowledgementsen{#1}\gdef\@acknowledgementszh{#2}}
 
-\abstractname{Abstract}{摘要}
+\abstractname{Abstract}{中文摘要}
 \acknowledgements{Acknowledgements}{誌謝}
 
 \DeclareRobustCommand{\makecover}{
