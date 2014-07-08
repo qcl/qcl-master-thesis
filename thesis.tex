@@ -7,6 +7,13 @@
 \usepackage{graphicx}
 \usepackage{array}
 
+\usepackage{titlesec}
+
+% Centering the ToC's title
+\usepackage{tocloft}
+
+\usepackage[notbib]{tocbibind}
+
 % Using the tex-text mapping for ligatures etc.
 \defaultfontfeatures{Mapping=tex-text}
 
@@ -14,13 +21,21 @@
 \setmainfont{Times New Roman}
 \setCJKmainfont{標楷體}
 
+\renewcommand{\cfttoctitlefont}{\hfill \Huge}
+\renewcommand{\cftaftertoctitle}{\hfill}
+\renewcommand{\cftloftitlefont}{\hfill \Huge}
+\renewcommand{\cftafterloftitle}{\hfill}
+\renewcommand{\cftlottitlefont}{\hfill \Huge}
+\renewcommand{\cftafterlottitle}{\hfill}
+
+
 % Your information goes here
 \input{ntuvars}
 
 % Modify some default titles for Chinese
-\renewcommand{\contentsname}{\centering 目錄}
-\renewcommand{\listfigurename}{\centering 圖目錄}
-\renewcommand{\listtablename}{\centering 表目錄}
+\renewcommand{\contentsname}{目錄}
+\renewcommand{\listfigurename}{圖目錄}
+\renewcommand{\listtablename}{表目錄}
 \renewcommand{\tablename}{表}
 \renewcommand{\figurename}{圖}
 
@@ -35,8 +50,17 @@
 \input{acknowledgements}
 \input{abstract}
 
+
+% Table of Content
+\clearpage
 \tableofcontents
+
+% List of Figures
+\clearpage
 \listoffigures
+
+% List of Tables
+\clearpage
 \listoftables
 
 \mainmatter
