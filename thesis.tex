@@ -17,12 +17,19 @@
 % Your information goes here
 \input{ntuvars}
 
+% Modify some default titles for Chinese
+\renewcommand{\contentsname}{\centering 目錄}
+\renewcommand{\listfigurename}{\centering 圖目錄}
+\renewcommand{\listtablename}{\centering 表目錄}
+\renewcommand{\tablename}{表}
+\renewcommand{\figurename}{圖}
+
 \begin{document}
 
 \frontmatter
 
 \makecover
-
+%\makespine
 \makecertification
 
 \input{acknowledgements}
