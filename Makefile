@@ -20,3 +20,6 @@ clean-pdf:
 	$(RM) *.pdf
 
 clean-all: clean clean-pdf
+
+setup:
+	sudo apt-get install texlive texlive-xetex texlive-latex-recommended texlive-latex-extra 
