@@ -12,9 +12,17 @@
 % Centering the ToC's title
 \usepackage{tocloft}
 
+% Include ToC/LoF/LoT into ToC
 \usepackage[notbib]{tocbibind}
 
+% Include outside .pdf
+\usepackage{pdfpages}
+
+% Add wallpaper
+\usepackage{wallpaper}
+
 %\usepackage{indentfirst}
+% 2 words indent in first line for Chinese
 \setlength{\parindent}{2em}
 
 % Using the tex-text mapping for ligatures etc.
@@ -24,13 +32,15 @@
 \setmainfont{Times New Roman}
 \setCJKmainfont{標楷體}
 
-\renewcommand{\cfttoctitlefont}{\hfill \Huge}
-\renewcommand{\cftaftertoctitle}{\hfill}
+% ToC, LoF, LoT centering settings with package tocloft
 \renewcommand{\cftloftitlefont}{\hfill \Huge}
 \renewcommand{\cftafterloftitle}{\hfill}
+\renewcommand{\cftaftertoctitle}{\hfill }
+\renewcommand{\cfttoctitlefont}{\hfill \Huge}
 \renewcommand{\cftlottitlefont}{\hfill \Huge}
 \renewcommand{\cftafterlottitle}{\hfill}
 
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % for chapters
 
 % Your information goes here
 \input{ntuvars}
@@ -41,27 +51,38 @@
 \renewcommand{\listtablename}{表目錄}
 \renewcommand{\tablename}{表}
 \renewcommand{\figurename}{圖}
+\renewcommand{\bibname}{參考文獻}
 
 \begin{document}
+
+% 臺大論文浮水印
+\CenterWallPaper{0.174}{watermark.pdf}
+\setlength{\wpXoffset}{6.1725cm}
+\setlength{\wpYoffset}{10.5225cm}
 
 \frontmatter
 
 \makecover
 %\makespine
-\makecertification
 
+% 口試委員會審定書
+% 以 \makecertification 產生
+%\makecertification
+% 或匯入外部.pdf檔
+\addcontentsline{toc}{chapter}{口試委員會審定書}
+\includepdf[pages={1}]{cert.pdf}
+
+% 誌謝
 \input{acknowledgements}
+% 摘要
 \input{abstract}
-
 
 % Table of Content
 \clearpage
 \tableofcontents
-
 % List of Figures
 \clearpage
 \listoffigures
-
 % List of Tables
 \clearpage
 \listoftables
