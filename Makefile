@@ -17,7 +17,7 @@ clean:
 	$(RM) *.log *.aux *.dvi *.lof *.lot *.toc *.bbl *.blg
 
 clean-pdf: 
-	$(RM) *.pdf
+	$(RM) $(MAIN).pdf
 
 clean-all: clean clean-pdf
 
