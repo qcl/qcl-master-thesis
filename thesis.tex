@@ -31,9 +31,38 @@
 % Set the default fonts
 \setmainfont{Times New Roman}
 %\setCJKmainfont{楷體-繁}
-\setCJKmainfont[AutoFakeBold=1]{標楷體}
-%\renewcommand{\textbf}[1]{\Kai{\bf{#1}}}
+\setCJKmainfont{標楷體}
+% value > 0
+\def\xeCJKembold{0.4}
 
+% hack into xeCJK, you don't need to understand it
+\def\saveCJKnode{\dimen255\lastkern}
+\def\restoreCJKnode{\kern-\dimen255\kern\dimen255}
+
+% save old definition of \CJKsymbol and \CJKpunctsymbol for CJK output
+\let\CJKoldsymbol\CJKsymbol
+\let\CJKoldpunctsymbol\CJKpunctsymbol
+
+% apply pdf literal fake bold
+\def\CJKfakeboldsymbol#1{%
+  \special{pdf:literal direct 2 Tr \xeCJKembold\space w}%
+  \CJKoldsymbol{#1}%
+  \saveCJKnode
+  \special{pdf:literal direct 0 Tr}%
+  \restoreCJKnode}
+\def\CJKfakeboldpunctsymbol#1{%
+  \special{pdf:literal direct 2 Tr \xeCJKembold\space w}%
+  \CJKoldpunctsymbol{#1}%
+  \saveCJKnode
+  \special{pdf:literal direct 0 Tr}%
+  \restoreCJKnode}
+\newcommand\CJKfakebold[1]{%
+  \let\CJKsymbol\CJKfakeboldsymbol
+  \let\CJKpunctsymbol\CJKfakeboldpunctsymbol
+  #1%
+  \let\CJKsymbol\CJKoldsymbol
+  \let\CJKpunctsymbol\CJKoldpunctsymbol}
+\newcommand\zhbf[1]{\CJKfakebold{#1}}
 
 % ToC, LoF, LoT centering settings with package tocloft
 \renewcommand{\cftloftitlefont}{\hfill \Huge}
