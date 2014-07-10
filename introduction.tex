@@ -1,31 +1,35 @@
-\chapter{序論}
+\chapter{緒論}
 \label{c:intro}
 
+% TODO - 緒論 vs 序論？
+
 近年來，隨著網際網路的快速發展，網際網路中開始出現越來越多彙整人類知識的網站與資源，
-如維基百科（Wikipedia）、Freebase等，是透過來自世界各地的志願編輯者一字一句的貢獻建立而成的。
+如Wikipedia、Freebase等，是透過來自世界各地的志願編輯者一字一句的貢獻建立而成的。
 
-% 為了讓機器可以利用人類的知識來進行一些先進的應用（像是Siri之類的），需要結構化的知識
+但這種形式的知識僅有人類可以利用，為了讓計算機可以利用人類的知識來輔助、改善人工智慧、資料截取、知識汲取、自動問答系統等任務，
+便需要計算機可以理解的結構化知識，於是，便有了透過擷取Wikipedia等網站資訊，建構結構化知識的資源如YAGO、DBpedia。
 
-除了前述網站與資源外，還出現了以其為來源，透過自動化方式產生的結構化資源，
-如YAGO、DBpedia等資料庫透過擷取Wikipedia建立結構化的資料庫。
-
+% TODO - 說明能夠快速抓住變動的知識是很重要的
+% TODO - 可能可以加上 Linked-Data 的圖片
 
 \section{背景介紹}
 % Keyword: 知識庫、內容串流
-
-知識庫
-
-如YAGO、DBpedia、Freebase等
-
-內容串流
-
+% TODO
+如Wikipedia、Freebase、YAGO、DBpedia等這類儲存記錄實體（Entity）與實體之特性（Properties）、關係（Relationships）的資料庫被稱為知識庫（Knoledge Base）。
+以Wikipedia來說，Wikipedia以文章的形式儲存了人物、公司、組織、事件等實體，以超連結（Hyperlink）連結文章與文章的文句則可視為一種關係的描述，
+例如「
+\textbf{甲}是
+\textbf{乙}的員工」這樣的句子；而文章中的資訊框（Infoboxes）則是一種對實體之特性半結構化（Semi-structured）的描述。    
+%TODO - 加圖片
+而知識庫的維護者，如Wikipedia的志願編輯者，人數比起
 
 \section{研究動機}
 % Keyword: 知識庫加速
-知識庫加速
+% TODO
 
 \section{研究目標}
 % Keyword: given a content stream, 回答有沒有某個特性這樣
+% TODO
 
 \section{論文架構}  % TODO FIXME
 本論文共分成五個章節。

@@ -30,7 +30,10 @@
 
 % Set the default fonts
 \setmainfont{Times New Roman}
-\setCJKmainfont{標楷體}
+%\setCJKmainfont{楷體-繁}
+\setCJKmainfont[AutoFakeBold=1]{標楷體}
+%\renewcommand{\textbf}[1]{\Kai{\bf{#1}}}
+
 
 % ToC, LoF, LoT centering settings with package tocloft
 \renewcommand{\cftloftitlefont}{\hfill \Huge}
