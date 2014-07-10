@@ -21,8 +21,8 @@
 % Add wallpaper
 \usepackage{wallpaper}
 
-%\usepackage{indentfirst}
 % 2 words indent in first line for Chinese
+\usepackage{indentfirst}
 \setlength{\parindent}{2em}
 
 % Using the tex-text mapping for ligatures etc.
@@ -35,12 +35,12 @@
 % ToC, LoF, LoT centering settings with package tocloft
 \renewcommand{\cftloftitlefont}{\hfill \Huge}
 \renewcommand{\cftafterloftitle}{\hfill}
-\renewcommand{\cftaftertoctitle}{\hfill }
-\renewcommand{\cfttoctitlefont}{\hfill \Huge}
+\renewcommand{\cfttoctitlefont}{\hfil \Huge}
+\renewcommand{\cftaftertoctitle}{\hfill}
 \renewcommand{\cftlottitlefont}{\hfill \Huge}
 \renewcommand{\cftafterlottitle}{\hfill}
 
-\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % for chapters
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % dots for chapters
 
 % Your information goes here
 \input{ntuvars}
@@ -77,20 +77,22 @@
 % 摘要
 \input{abstract}
 
+% TODO - Chinese Chapter Wording setting
 % Table of Content
 \clearpage
 \tableofcontents
 % List of Figures
-%\clearpage
-%\listoffigures
+\clearpage
+\listoffigures
 % List of Tables
-%\clearpage
-%\listoftables
+\clearpage
+\listoftables
 
 \mainmatter
 
 % Your thesis goes here
 \input{introduction}
+\input{prototype}
 %\input{related}
 %\input{photoshoot}
 %\input{modeling}
