@@ -6,6 +6,7 @@ RM=rm -f
 .SUFFIXES: .tex
 
 all: $(MAIN).pdf
+	cp $(MAIN).pdf ~/Dropbox/102-2/Research/
 
 $(MAIN).pdf: *.tex ntuthesis.cls
 	$(LATEX) $(MAIN)
