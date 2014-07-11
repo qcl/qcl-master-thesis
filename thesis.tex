@@ -8,6 +8,7 @@
 \usepackage{array}
 
 \usepackage{titlesec}
+\usepackage{titletoc}
 
 % Centering the ToC's title
 \usepackage{tocloft}
@@ -64,6 +65,32 @@
   \let\CJKpunctsymbol\CJKoldpunctsymbol}
 \newcommand\zhbf[1]{\CJKfakebold{#1}}
 
+% Very Naive Chinese Number
+\newcommand\naiveZhNum[1]{
+\ifnum #1 = 1 
+一 
+\else \ifnum #1 = 2
+二
+\else \ifnum #1 = 3
+三
+\else \ifnum #1 = 4
+四
+\else \ifnum #1 = 5
+五
+\else \ifnum #1 = 6
+六
+\else \ifnum #1 = 7
+七
+\else \ifnum #1 = 8
+八
+\else \ifnum #1 = 9
+九
+\else
+#1
+\fi\fi\fi\fi\fi\fi\fi\fi\fi
+}
+
+
 % ToC, LoF, LoT centering settings with package tocloft
 \renewcommand{\cftloftitlefont}{\hfill \Huge}
 \renewcommand{\cftafterloftitle}{\hfill}
@@ -72,7 +99,9 @@
 \renewcommand{\cftlottitlefont}{\hfill \Huge}
 \renewcommand{\cftafterlottitle}{\hfill}
 
+\titleformat{\chapter}{\centering\Huge\bfseries}{第\,\naiveZhNum{\thechapter} \,章}{1em}{}
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % dots for chapters
+\titlecontents{chapter}[0em]{}{\makebox[4.1em][l]{第\naiveZhNum{\thecontentslabel}章}}{}{\cftdotfill{\cftdotsep}\contentspage}
 
 % Your information goes here
 \input{ntuvars}
