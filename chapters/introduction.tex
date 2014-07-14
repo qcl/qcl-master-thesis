@@ -57,23 +57,32 @@
 % 知識庫不會憑空產生，多半是擷取人工編輯的成果或靠人工編輯，因此如何讓人工編輯的速度可以跟上知識產生的速度便成為一個重要的課題。
 % TODO
 % Keyword: 知識庫加速
-知識庫的維護者，如Wikipedia的志願編輯者，人數比起知識庫中的實體實在是非常的少， % FIXME -> 這裡是翻自KBA
-這意味著當舊有的知識產生變化時，或有新的知識出現時，這樣的變動或新增需要經過一段長時間後，編輯者才會更新知識庫。
-% TODO - 補一下數據，大概多久才會被更新的數據
-為了縮短新知識產生到更新知識庫的這段差距，自2012年起至今的每年NIST的TREC（TExt Retriveal Conference）都會舉辦KBA（Knowledge Base Acceleration）競賽，
-提供一個有4973小時，每個小時包含100000篇文件的的內容串流（Content Stream），模擬現實世界之中不斷產生的新文章，包含了新聞、部落格、論壇等。
-並給定了一組關注的實體，包含了人物、組織或建築，希望參賽者可以建立一個系統過濾內容串流中的資訊，
-推薦編輯者哪些資訊可以幫助編輯者更新知識庫中關於這些目標實體的知識。
-% TODO - 補一下 KBA 數據
+知識庫仰賴志願編輯者的維護與更新，但這些人數比起資料庫中記錄的實體顯然非常的少。
+這意味著知識庫的更新總是落後於新知識（過去從來不知道的知識與舊有知識內容的更動）的產生，
+當新知識產生一段時日之後，知識庫的維護者才會更新知識庫，
+圖\ref{i:wikicitenews}\cite{kba2012}表現了這種落後可能達一年甚至更長。
+因此，如何讓人工編輯的速度可以跟上新知識出現的速度便成為一個重要的課題。
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/01-wiki-cite-delay}
+    \caption{Time lag for a sample of ~60,000 web pages cited by WP articles}
+    \label{i:wikicitenews}
+\end{figure}
+
+為了縮短這個差距，自2012年起至今的每年美國NIST\footnote{National Institue of Standards and Technology}的TREC\footnote{Text Retriveal Conference}都會舉辦知識庫加速（Knowledge Base Acceleration, KBA）競賽，
+希望參賽者可以建立一個系統，從由新聞、部落格、論壇等內容所組成、依時間所排列的龐大內容串流\footnote{2012年包含了4,973個小時，2013年包含了11,948小時。每小時包含約100,000份文件。}（Content Strean）中，
+對有興趣的實體\footnote{2012年有27個人物、2個組織，2013年有98個人物，12個組織與24個設施。}，包含了人物、組織或建築，進行過濾，
+推薦文件給知識庫的編輯者，建議編輯者這份文件可能含有新的知識可供更新知識庫。
+
+要從可能包含新知識的內容串流中，過濾出可能可以協助更新知識庫的文件，
+則需要知道文章中是否包含知識。知識庫中實體間的關係、實體的特性就是一種知識，
+我們想要知道一份來自內容串流的文件是否提及實體的特性，
+例如句子「Jobs was born in San Francisco, California on February 24, 1955」中就包含了實體Jobs及其出生地這項特性的知識。
+如果可以知道文章中是否包含這些資訊，便能夠進一步地協助知識庫的更新與維護。
 
 % TODO
 % We want to fill the Knowledge gap, do it fast
-
-%TODO - Add KBA overview's image
-
-%由於每天產生的資訊太多，與知識庫的更新落差太大，我們希望可以縮短這樣的差距，加速知識庫的更新。
-
-
 
 %
 %   Goal
