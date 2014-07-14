@@ -1,7 +1,8 @@
 %
 %   Chapter Introduction
 %
-%   author: Qing-Cheng Li r01922024 at csie dot ntu dot edu dot tw
+%   Qing-Cheng Li (r01922024 at csie dot ntu dot edu dot tw)
+%   R.O.C.103.07
 %
 \chapter{緒論}
 \label{c:intro}
@@ -54,24 +55,21 @@
 %   Motivation
 %
 \section{研究動機}
-% 知識庫不會憑空產生，多半是擷取人工編輯的成果或靠人工編輯，因此如何讓人工編輯的速度可以跟上知識產生的速度便成為一個重要的課題。
-% TODO
-% Keyword: 知識庫加速
 知識庫仰賴志願編輯者的維護與更新，但這些人數比起資料庫中記錄的實體顯然非常的少。
 這意味著知識庫的更新總是落後於新知識（過去從來不知道的知識與舊有知識內容的更動）的產生，
 當新知識產生一段時日之後，知識庫的維護者才會更新知識庫，
-圖\ref{i:wikicitenews}\cite{kba2012}表現了這種落後可能達一年甚至更長。
+圖\ref{i:wikicitenews}表現了這種落後可能達一年甚至更長。
 因此，如何讓人工編輯的速度可以跟上新知識出現的速度便成為一個重要的課題。
 
 \begin{figure}
     \centering
     \includegraphics[width=0.5\textwidth]{images/01-wiki-cite-delay}
-    \caption{Time lag for a sample of ~60,000 web pages cited by WP articles}
+    \caption{Time lag for a sample of ~60,000 web pages cited by Wikipedia articles\cite{kba2012} }
     \label{i:wikicitenews}
 \end{figure}
 
 為了縮短這個差距，自2012年起至今的每年美國NIST\footnote{National Institue of Standards and Technology}的TREC\footnote{Text Retriveal Conference}都會舉辦知識庫加速（Knowledge Base Acceleration, KBA）競賽，
-希望參賽者可以建立一個系統，從由新聞、部落格、論壇等內容所組成、依時間所排列的龐大內容串流\footnote{2012年包含了4,973個小時，2013年包含了11,948小時。每小時包含約100,000份文件。}（Content Strean）中，
+希望參賽者可以建立一個系統，從由新聞、部落格、論壇等內容所組成、依時間所排列的龐大內容串流\footnote{2012年包含了4,973個小時，2013年包含了11,948小時。\cite{kba2013}每小時包含約100,000份文件。}（Content Strean）中，
 對有興趣的實體\footnote{2012年有27個人物、2個組織，2013年有98個人物，12個組織與24個設施。}，包含了人物、組織或建築，進行過濾，
 推薦文件給知識庫的編輯者，建議編輯者這份文件可能含有新的知識可供更新知識庫。
 
@@ -79,26 +77,27 @@
 則需要知道文章中是否包含知識。知識庫中實體間的關係、實體的特性就是一種知識，
 我們想要知道一份來自內容串流的文件是否提及實體的特性，
 例如句子「Jobs was born in San Francisco, California on February 24, 1955」中就包含了實體Jobs及其出生地這項特性的知識。
-如果可以知道文章中是否包含這些資訊，便能夠進一步地協助知識庫的更新與維護。
-
-% TODO
-% We want to fill the Knowledge gap, do it fast
+如果可以快速地辨識文章中是否包含這些資訊，推薦給知識庫的編輯者參考，便能夠進一步地加速知識庫的更新與維護。
 
 %
 %   Goal
 %
 \section{研究目標}
-% Keyword: given a content stream, 回答有沒有某個特性這樣
-% TODO
+本研究的目標是建立一個過濾系統，可以快速地處理內容串流。
+對於內容串流內的每一份文件，偵測該文件中是否存在我們感興趣的實體特性。
+
+透過這個系統，我們將知道經過過濾的文件到底是完全沒有提及我們感興趣的實體特性，
+或提及其中一種實體特性，甚至是同時提及了多種實體特性。
+這些資訊將有助於加速知識庫的更新與維護。
 
 %
 %   Structure
 %
-\section{論文架構}  % TODO FIXME
+\section{論文架構}
 本論文共分成五個章節。
 第一章是緒論，簡介本研究的背景、動機與目標。
 第二章是文獻探討，列舉了一些相關的研究與資源。
 第三章是研究方法，提出如何於內容串流中究偵測實體特性的方法與步驟。
-第四章是實驗結果與分析，
-第五章是結論與未來展望，
+第四章是實驗結果與分析。    % TODO
+第五章是結論與未來展望。    % TODO
 
