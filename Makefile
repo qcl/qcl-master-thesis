@@ -8,7 +8,7 @@ RM=rm -f
 all: $(MAIN).pdf
 	cp $(MAIN).pdf ~/Dropbox/102-2/Research/
 
-$(MAIN).pdf: *.tex chapters/*.tex ntuthesis.cls thesis.bib
+$(MAIN).pdf: *.tex chapters/*.tex ntuthesis.cls thesis.bib images/* tables/*.tex
 	$(LATEX) $(MAIN)
 	$(BIBTEX) $(MAIN)
 	$(LATEX) $(MAIN)
