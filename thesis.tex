@@ -7,6 +7,9 @@
 \usepackage{graphicx}
 \usepackage{array}
 
+% Format the refs
+\usepackage[sort,comma]{natbib}
+
 \usepackage{titlesec}
 \usepackage{titletoc}
 
@@ -128,7 +131,7 @@
 
 % 口試委員會審定書 TODO 
 % 以 \makecertification 產生
-%\makecertification
+\makecertification
 % 或匯入外部.pdf檔
 %\addcontentsline{toc}{chapter}{口試委員會審定書}
 %\includepdf[pages={1}]{pdfs/cert.pdf}
@@ -154,18 +157,18 @@
 \mainmatter
 
 % Your thesis goes here
-\input{chapters/introduction}   % FIXME
-\input{chapters/related}        % TODO
-\input{chapters/method}        % TODO 
-\input{chapters/experiment}   % TODO
-\input{chapters/conclusion}    % TODO
+\input{chapters/introduction}
+\input{chapters/related}
+\input{chapters/method}
+\input{chapters/experiment}
+\input{chapters/conclusion}
 
 \appendix
 
 \backmatter
 
 \addcontentsline{toc}{chapter}{\bibname}
-\bibliographystyle{ieeetr}  % use ieeetr, so the order will sort by apperance
+\bibliographystyle{apa}
 
 % Your bibliography goes here
 \bibliography{thesis}
