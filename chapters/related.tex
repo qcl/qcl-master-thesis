@@ -67,22 +67,44 @@ CCR任務主要專注在尋找文章中是否有出現目標實體（Mentions/Ze
 效能比\cite{kba-hltoce}還要好。
 
 \subsection{知識庫的應用}
-\cite{freebase-qa-extract}
-\cite{freebase-qa-parse}
-\cite{yago-qa}
-\cite{freebase-google} %則是Google則利用Freebase對實體消歧義（Disambiguation）所做的研究。
-\cite{dbpedia-spotlight} 
+
+知識庫的應用常見於問答系統或實體消歧義上。
+
+在問答系統的應用上，知識庫提供了一個知識的集合，也就是答案的來源，
+\cite{yago-qa}將問句轉換為查詢語言，對YAGO進行查詢並回答問題。
+\cite{freebase-qa-extract}利用Freebase的資料，以邏輯形式（Latent Logical Forms）對映問題與答案。
+\cite{freebase-qa-parse}將知識庫視為一個實體為點，關聯為邊的圖，
+假設答案只會存在於周遭的節點上，成為一個主題圖（Topic Graph），
+將問句剖析後在圖上走訪尋找答案。
+
+而在具名實體消歧義（Named Entity Disambiguation）上的應用，
+\cite{dbpedia-spotlight} 提供了一個系統將文本內的實體連結至DBpedia。
+他們將DBpedia的實體建立向量空間模型（Vector Space Model），
+但與傳統VSM不同的是，IDF（Inverse Document Frequency）反應一個字在整個資料集內的重要程度，
+卻沒辦法反應一個字在歧義候選選項內的重要程度。
+為了要能夠找出一個字對消歧義的能力，
+他們提出ICF（Inverse Candidate Frequency）來取代IDF計算字在向量空間中的權重，
+定義$ICF(word) = log \frac{|R|}{n(word)}$，其中$|R|$是候選實體的數量，
+$n(word)$是字在候選實體中出現的次數。
+將DBpedia的實體以向量空間模型建模，以$TF*ICF$計算字的權重，
+將文句與候選的實體向量空間模型計算相似度，取最相似的作為真正的結果。
+
+% 這個有點複雜呀Orz...
+% \cite{freebase-google} 則是Google則利用Freebase對實體消歧義。
 
 %
 %   Pattern and Relation
 %
 \section{樣式與實體間關係}
 
-知識隨著時間變化是可能產生改變的，
-\cite{relationsByTime} 提到有些實體間的關係是相對恆常的，例如《1Q84》的作者是村上春樹；
+實體間的關係是可能隨著時間而產生變化的，
+知道哪些關係會變化對於協助知識庫的更新是有幫助的，可以更注意那些會變動的關係。
+\cite{relationsByTime} 提到有些實體間的關係是相對恆常的，
+例如《1Q84》的作者是村上春樹是不會改變的事實；
 而有些關係則是隨著時間而變動的，例如美國的總統是布希，只有在某一段時間內是正確關係。
-此研究將實體間的關係分為是否為恆常（Constant）或是否唯一（Unique），
-人工挑選1,000組關係並利用時間、實體出現在特定時段內的頻率、文法等特徵對關係進行分類。
+此研究將實體間的關係分為是否為恆常（Constant）或是否唯一（Unique）。
+恆常是指是否這組關係不會隨著時間改變，唯一是指抽換實體後關係是否仍然正確。
+此研究人工挑選1,000組關係並利用時間、實體出現在特定時段內的頻率、文法等特徵對關係進行分類。
 
 \cite{reverb} 建立了一套開放資訊擷取系統（Open Information Extraction System），
 透過動詞表示的詞彙與句法限制，以<arg1, relation, arg2>的形式自動擷取出實體間的關係，
@@ -121,5 +143,5 @@ PATTY釋義了225種DBpedia關係，包含127,811個樣式；25種YAGO關係，�
 
 本研究將嘗試利用PATTY提供的關係釋義來偵測實體特性是否存在於文件之中。   % FIXME - 收尾好像不是收的挺好
 
-\cite{aptagger}
+%\cite{aptagger}
 
