@@ -34,64 +34,49 @@ Freebase是一個用以結構化人類知識的社群協作的可擴展元組（
 
 \subsection{知識庫加速}
 
-\cite{kba2012,kba2013}
+\cite{kba2012,kba2013}縱覽了2012、2013年的TREC知識庫加速競賽，
+連續兩年都有的CCR（Cumulative Citation Recommendation）任務是過濾內容串流，
+推薦對更新目標實體有幫助的文章，以縮短知識產生與知識庫更新之間的時間差。
+圖\ref{i:kba-corps}是這兩年CCR任務中內容串流的資料量與目標實體的數量，
+內容串流中每小時約有100,000份文件。
+CCR任務主要專注在尋找文章中是否有出現目標實體（Mentions/Zero Mentions），
+再進一步依照有幫助的程度分成四個等級（Garbage/Neutral/Useful/Vital）。
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.65\textwidth]{images/02-kba-corpus}
+    \caption{TREC知識庫加速競賽資料量}
+    \label{i:kba-corps}
+\end{figure}
+
+\cite{kba-hltoce}是2012年效能最好的團隊，
+以具名實體、單字詞（Unigram）作為特徵訓練SVM分類器，
+對每個目標實體訓練一個二元分類器。
+把尋找實體的問題作為主題分類（Topic Classification）問題來處理。
+
+\cite{kba-msra}則是2013年效能最好的團隊。
+以查詢擴展（Query Expansion）、分類與學習式排序法（Learning to rank）。
+其中分類是使用以文件特徵、實體特徵、文件與實體特徵、
+時間特徵與引用特徵訓練隨機森林（Random Forest）分類器。
+
+此外，\cite{kba-entity-detection}也專注於尋找串流中的實體，
+提出了當出現新的實體時不需要新的訓練資料集的方法。
+使用了文件中心特徵、實體資料特徵與時間特徵訓練隨機森林分類器，
+以尋找串流中與實體高度相關的文件。
+並且以TREC KBA 2012的資料做測試，
+效能比\cite{kba-hltoce}還要好。
 
 \subsection{知識庫的應用}
 \cite{freebase-qa-extract}
 \cite{freebase-qa-parse}
 \cite{yago-qa}
-
-\cite{freebase-google} 則是Google則利用Freebase對實體消歧義（Disambiguation）所做的研究。
+\cite{freebase-google} %則是Google則利用Freebase對實體消歧義（Disambiguation）所做的研究。
 \cite{dbpedia-spotlight} 
 
-\section{實體間關係}
-
-
-%
-%   KBA
-%
-\section{知識庫加速}
-
-\cite{kba2012}與\cite{kba2013}整理了2012年、2013年TREC的知識庫加速競賽的總覽。
-\cite{kba2012}追蹤60,000個被Wikipedia引用的網頁，
-發現引用文章的時間與被引用文章的產生時間差中位數是一年，
-顯示知識庫更新的速度遠落後於知識產生的速度，為了彌補這個差距，
-連續兩年皆有累積引用推薦（Cumulative Citation Recommendation, CCR）任務，   % FIXME - 翻譯？
-有一個特定的實體清單，並從內容串流中篩選出值得被引用的文件來建議知識庫的編輯者更新及維護知識庫。
-
-\begin{figure}
-    \centering
-    \caption{Yo}
-    \label{i:kba-corps}
-\end{figure}
-
-% 內容串流描述
-
-% 競賽結果簡述
-
-% 圍繞「實體」為主的方法。
-\cite{kba-hltoce}利用什麼方法，
-而\cite{kba-msra}用的方法是，
-
-% 除此之外...
-另外，\cite{kba-entity-detection}
-
-%
-%   Structural KB
-%
-\section{結構化的知識庫}
-% TODO
-
-\cite{freebase}
-\cite{dbpedia}
-\cite{yago}
-
-
-\cite{aptagger}
 %
 %   Pattern and Relation
 %
-\section{實體間的關係}
+\section{樣式與實體間關係}
 
 知識隨著時間變化是可能產生改變的，
 \cite{relationsByTime} 提到有些實體間的關係是相對恆常的，例如《1Q84》的作者是村上春樹；
@@ -135,4 +120,6 @@ PATTY釋義了225種DBpedia關係，包含127,811個樣式；25種YAGO關係，�
 其透過隨機選取1,000組釋義來評估，平均的精確度（Precision）是0.76$\pm$0.03。
 
 本研究將嘗試利用PATTY提供的關係釋義來偵測實體特性是否存在於文件之中。   % FIXME - 收尾好像不是收的挺好
+
+\cite{aptagger}
 
