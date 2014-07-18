@@ -12,6 +12,7 @@
 
 \usepackage{titlesec}
 \usepackage{titletoc}
+\usepackage{etoolbox}
 
 % Centering the ToC's title
 \usepackage{tocloft}
@@ -105,6 +106,11 @@
 \titleformat{\chapter}{\centering\Huge\bfseries}{第\naiveZhNum{\thechapter}章}{1em}{}
 \renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}} % dots for chapters
 \titlecontents{chapter}[0em]{}{\makebox[4.1em][l]{第\naiveZhNum{\thecontentslabel}章}}{}{\cftdotfill{\cftdotsep}\contentspage}
+
+\makeatletter
+\patchcmd{\@chapter}{\addtocontents{lot}{\protect\addvspace{10\p@}}}{}{}{}
+\patchcmd{\@chapter}{\addtocontents{lof}{\protect\addvspace{10\p@}}}{}{}{}
+\makeatother
 
 % Your information goes here
 \input{ntuvars}
