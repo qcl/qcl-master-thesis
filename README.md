@@ -16,10 +16,16 @@ This is copy from @tzhuan 's [臺灣大學碩博士論文 XeLaTeX 模板](https:
     * sudo cp [WINDOWS]/Windows/Fonts/times\*.ttf /usr/share/truetype/win/
     * fc-cache
     * fc-list //for check
+* 編譯
+    * make
 
 ### Mac OS
-TODO
+
+* 安裝[MacTEX](https://tug.org/mactex/)
+* 編譯
+    * make
 
 ### Windows
-TODO
+
+* 留下字形檔案，下載[Ubuntu](http://www.ubuntu.com/)或找一台[蘋果電腦](http://www.apple.com/tw/mac/)。
 
