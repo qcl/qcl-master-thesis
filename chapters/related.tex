@@ -106,6 +106,7 @@ $n(word)$是字在候選實體中出現的次數。
 恆常是指是否這組關係不會隨著時間改變，唯一是指抽換實體後關係是否仍然正確。
 此研究人工挑選1,000組關係並利用時間、實體出現在特定時段內的頻率、文法等特徵對關係進行分類。
 
+在擷取關係的部分，
 \cite{reverb} 建立了一套開放資訊擷取系統（Open Information Extraction System），
 可以擷取開方式的關係<$arg_1$, $relation$, $arg_2$>，
 而不限於人工標定的關係。
@@ -125,16 +126,31 @@ $n(word)$是字在候選實體中出現的次數。
 \end{figure}
 
 而Wikipedia中，每一篇文章，或稱條目，是描寫一個特定的實體，
-\cite{wisenet} 利用Wikipedia文章中連至其他條目的連結作為實體，
-以此擷取條目間，也就是實體間的關係。
-由於同一種關係可能由不同的語句樣式（Patterns）來表達，
-此研究應用了Wikipedia條目分類資訊、樣式的前後文來分類同義樣式。
+\cite{wisenet} 自Wikipedia文章中提及其他實體的句子擷取關係，
+由於同一種關係可能由不同的字樣來表達，為了建立同義字樣集，
+定義了連結實體間關係的字樣間的相似度是字樣連結的實體重複的比例，
+比例越高越相似，相似的字樣就可以聚集成同義字樣集，
+並且應用Wikipedia的分類與上下文給予同義字樣集語意上的分類。
 
-\cite{patty2012}及\cite{patty}建立了一個名為PATTY的分類集（Taxonomy），
-將用來表達關係的樣式進行分類，將同義樣式合併，並附上實體類別資訊，
+\cite{patty,patty2012}建立了一個名為PATTY的分類集（Taxonomy），
+自Wikipedia、New York Times中擷取出樣式，建立同義樣式集，
+並將同義樣式集合併，連結知識庫定義的實體關係。
+
+PATTY的關係是以「<Domain> Pattern <Range>」表示，
+Domain與Range是實體的類型（Types），來自知識庫YAGO、Freebase。
+而PATTY的樣式是以單字（Words）、詞性標記（Part-Of-Speech Tags）、萬用字元（Wildcards）所組成，
+例如「<$person$>'s [adj] voice * <$song$>」中，
+Domain是$person$，即第一個實體的類型是$person$；
+Range是$song$，即第二個實體的類型是$song$ 。
+「[adj]」是
+
+%%%%
+
+將用來表達關係的樣式進行分類，並將同義樣式合併，並附上實體類別資訊，
 將關係表達為「<type 1> \emph{Pattern} <type 2>」，Type 1和Type 2是實體的類別，
 而Pattern則由單字（Words）、詞性標記（Part-Of-Speech Tags）、萬用字元（Wildcards）所組成，
 例如「<person>'s [adj] voice * <song>」。   % FIXME - Example
+
 
 PATTY自Wikipedia、New York Times抽取句子，
 以史丹佛剖析器（Stanford Parser\footnote{http://nlp.stanford.edu/software/lex-parser.shtml}）對句子建立剖析樹，
