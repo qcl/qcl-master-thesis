@@ -9,7 +9,7 @@ This is copy from @tzhuan 's [臺灣大學碩博士論文 XeLaTeX 模板](https:
 ### Ubuntu
 
 * 安裝XeLaTex
-    * sudo apt-get install texlive texlive-xetex texlive-latex-recommended texlive-latex-extra
+    * sudo apt-get install texlive texlive-xetex texlive-latex-recommended texlive-latex-extra texlive-bibtex-extra
 * 安裝字形（標楷體、Times New Roman）
     * sudo mkdir -p /usr/share/fonts/truetype/win/ 
     * sudo cp [WINDOWS]/Windows/Fonts/kaiu.ttf /usr/share/truetype/win/

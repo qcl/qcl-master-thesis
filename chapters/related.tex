@@ -133,45 +133,39 @@ $n(word)$是字在候選實體中出現的次數。
 並且應用Wikipedia的分類與上下文給予同義字樣集語意上的分類。
 
 \cite{patty,patty2012}建立了一個名為PATTY的分類集（Taxonomy），
-自Wikipedia、New York Times中擷取出樣式，建立同義樣式集，
+自Wikipedia、New York Times中擷取出樣式，建立同義樣式集（Pattern Synset），
 並將同義樣式集合併，連結知識庫定義的實體關係。
 
 PATTY的關係是以「<Domain> Pattern <Range>」表示，
-Domain與Range是實體的類型（Types），來自知識庫YAGO、Freebase。
+Domain與Range是實體的類型（Types），來自知識庫YAGO、DBpedia。
 而PATTY的樣式是以單字（Words）、詞性標記（Part-Of-Speech Tags）、萬用字元（Wildcards）所組成，
 例如「<$person$>'s [adj] voice * <$song$>」中，
 Domain是$person$，即第一個實體的類型是$person$；
 Range是$song$，即第二個實體的類型是$song$ 。
-「[adj]」是
+「[adj]」是詞性標記，代表這裡可以填入任意形容詞，「voice」是單字，必須完全匹配，
+「*」是萬用字元，可以填入任何字。
+例如「Amy Winehouse's soft voice in `Rehab'」這個句子就符合這個樣式。
 
-%%%%
-
-將用來表達關係的樣式進行分類，並將同義樣式合併，並附上實體類別資訊，
-將關係表達為「<type 1> \emph{Pattern} <type 2>」，Type 1和Type 2是實體的類別，
-而Pattern則由單字（Words）、詞性標記（Part-Of-Speech Tags）、萬用字元（Wildcards）所組成，
-例如「<person>'s [adj] voice * <song>」。   % FIXME - Example
-
-
-PATTY自Wikipedia、New York Times抽取句子，
-以史丹佛剖析器（Stanford Parser\footnote{http://nlp.stanford.edu/software/lex-parser.shtml}）對句子建立剖析樹，
+PATTY擷取樣式的方式是自Wikipedia、New York Times抽取句子，
+以史丹佛剖析器（Stanford Parser\footnote{http://nlp.stanford.edu/software/lex-parser.shtml}）對句子建立相依性剖析樹，
 以YAGO、Freebase作為實體的字典，判斷若句子中有兩個實體，
 則把兩實體間在樹上的最短路徑上的字句擷取出來作為樣式，
-並進一步合併樣式為同義樣式集（Pattern Synset）。
+並進一步合併樣式為同義樣式集。
 比起\cite{reverb}，PATTY可以抽取任意的關係，不被詞彙或句法所限制。
 
+抽取出樣式後，為了評估一個樣式的品質，PATTY定義了一個信心值（Confidence）。
 對每一個樣式，都存在一組支持集（Support Set），
 由符合樣式的實體對（Pairs of entites）所組成。
-透過支持集的大小，對每個樣式計算計算了一個信心值（Confidence），
-將樣式中的實體類別從類別改為類別繼承架構中的更廣義的父節點類別，
+透過支持集的大小，對每個樣式計算信心值，
+將樣式中的實體類別改為類別繼承架構中的更廣義的父節點類別，
 以可以填入的實體對數作為分母，支持集作為分子，
 得到的分數就是心信值，代表一個樣式的品質。
 
-除了同義樣式集之外，此研究還做了關係釋義（Relation Paraphrasing）：
+除了同義樣式集之外，PATTY還做了關係釋義（Relation Paraphrasing）：
 給定一個來自知識庫的關係，判斷一個樣式是否可以描述此一關係。
-PATTY釋義了225種DBpedia關係，包含127,811個樣式；25種YAGO關係，包含43,124個樣式。
+PATTY內有127,811個樣式可以描述225種DBpedia關係，43,124個樣式可以描述25種YAGO關係。
 其透過隨機選取1,000組釋義來評估，平均的精確度（Precision）是0.76$\pm$0.03。
 
-本研究將嘗試利用PATTY提供的關係釋義來偵測實體特性是否存在於文件之中。   % FIXME - 收尾好像不是收的挺好
-
-%\cite{aptagger}
+本研究欲使用樣式來尋找關係、實體特性，
+PATTY正好提供了所需要的樣式，以及樣式可以描述哪些關係等資料。
 
