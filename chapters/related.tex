@@ -107,8 +107,22 @@ $n(word)$是字在候選實體中出現的次數。
 此研究人工挑選1,000組關係並利用時間、實體出現在特定時段內的頻率、文法等特徵對關係進行分類。
 
 \cite{reverb} 建立了一套開放資訊擷取系統（Open Information Extraction System），
-透過動詞表示的詞彙與句法限制，以<arg1, relation, arg2>的形式自動擷取出實體間的關係，
-不限於人工標定的關係。
+可以擷取開方式的關係<$arg_1$, $relation$, $arg_2$>，
+而不限於人工標定的關係。
+過去的開放式資訊擷取系統會有非相干擷取（Incoherent Extraction）或無資訊擷取（Uninformative Extraction）的問題，
+透過句法限制（Syntactic Constraint），
+制定由詞性標記所組成的正則表示式，例如圖\ref{i:reverb-pos}，
+定義關係可以出現的形式，避免非相干擷取的問題。
+詞彙限制（Lexical Constraint）認為一個合法的關係應該在大型的語料庫之中會有許多不重複的參數（Argument）。
+由大型語料庫中擷取出的關係中，不重複參數配對的數量超過一個定值才會被認為是合法的關係，
+以解決無資訊擷取的問題。
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\textwidth]{images/02-reverb-pos}
+    \caption{詞性標記組成的正則表示式}
+    \label{i:reverb-pos}
+\end{figure}
 
 而Wikipedia中，每一篇文章，或稱條目，是描寫一個特定的實體，
 \cite{wisenet} 利用Wikipedia文章中連至其他條目的連結作為實體，
