@@ -162,7 +162,7 @@ PATTY擷取樣式的方式是自Wikipedia、New York Times抽取句子，
 得到的分數就是心信值，代表一個樣式的品質。
 
 除了同義樣式集之外，PATTY還做了關係釋義（Relation Paraphrasing）：
-給定一個來自知識庫的關係，判斷一個樣式是否可以描述此一關係。圖\ref{i:patty-online}為其成果。
+給定一個來自知識庫的關係，判斷一個樣式是否可以描述此一關係。圖\ref{i:patty-online}為其成果，如YAGO的「wasBornIn」關係可以用「[[con]] grew up」、「was bron [[con]] grew up」等樣式來描述。
 PATTY內有127,811個樣式可以描述225種DBpedia關係，43,124個樣式可以描述25種YAGO關係。
 其透過隨機選取1,000組釋義來評估，平均的精確度（Precision）是0.76$\pm$0.03。
 
