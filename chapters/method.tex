@@ -40,8 +40,11 @@
 在這個流程之中，必須要有一份實體特徵與樣式的對映表。
 此一部份本研究將利用PATTY已經提供的關係釋義表，
 表中包含了知識庫YAGO內定義的實體間關係、
-YAGO關係的領域與範圍，
+YAGO關係的領域與範圍（表\ref{t:yago-relation}），
 以及可以用來描述這個關係的樣式。
+
+%t:yago-relation
+\input{tables/yagoRela}
 
 光是這樣的流程並不足以偵測實體特性。
 使用樣式來偵測實體特性還會有樣式覆蓋度（Coverage）、
@@ -77,6 +80,11 @@ YAGO關係的領域與範圍，
 這個部份將在第\ref{s:pattern-disambiguity}節中說明。
 
 補上了樣式篩選與消歧義後的流程圖應修正為圖\ref{i:process-v2}。
+樣式比對使用的樣式是經過篩選的，
+比對出來後還要進行消歧義才完成偵測實體特性之流程。
+由於偵測實體特性的流程對於每一分文件都是相同，且彼此互相獨立，
+因此可以平行處理文件，如圖\ref{i:process-parallel}所示，
+處理內容串流的大量文件。
 
 \begin{figure}
     \centering
@@ -85,14 +93,17 @@ YAGO關係的領域與範圍，
     \label{i:process-v2}
 \end{figure}
 
-%樣式 -> 
-%
-%關係
-%聊程
-%PATTY
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/00-tmp-img}    %TODO
+    \caption{平行處理架構}
+    \label{i:process-parallel}
+\end{figure}
 
 \section{樣式比對}
 \label{s:pattern-match}
+
+樣式比對是要自句子中找出樣式，
 
 \section{樣式篩選}
 \label{s:select-pattern}
@@ -125,8 +136,6 @@ YAGO關係的領域與範圍，
 %該處便存在該樣式於PATTY中所屬的關係，亦即實體特性。
 %本研究將嘗試利用樣式來偵測表\ref{t:yago-relation}中的YAGO關係是否存在一份文件之中。
 
-%t:yago-relation
-\input{tables/yagoRela}
 %
 %\subsection{偵測步驟}
 %
