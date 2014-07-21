@@ -103,7 +103,30 @@ YAGO關係的領域與範圍（表\ref{t:yago-relation}），
 \section{樣式比對}
 \label{s:pattern-match}
 
-樣式比對是要自句子中找出樣式，
+樣式比對是要從句子之中確定某一個樣式是否存在，
+PATTY中提供的25個YAGO關係有43,124個樣式，
+但其中有不少是重複出現的，
+實際上總共有19,031個獨特的樣式，
+如果對每個句子都做19.031次比較顯然不是一個好方法。
+
+% Prefix-Tree
+為了讓樣式比對可以有效率些，
+我們將所有的樣式建立成一顆前綴樹（Prefix Tree），
+如圖\ref{i:pattern-prefix-tree}所示。
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/00-tmp-img}    %TODO
+    \caption{樣式前綴樹}
+    \label{i:pattern-prefix-tree}
+\end{figure}
+
+% Algo
+
+% Try to use Algorithm package?
+
+% Complexity
+
 
 \section{樣式篩選}
 \label{s:select-pattern}
@@ -111,44 +134,8 @@ YAGO關係的領域與範圍（表\ref{t:yago-relation}），
 \section{特性消歧義}
 \label{s:pattern-disambiguity}
 
-%樣式比對
-%
-%\section{}
-%
-%一些統計
-%
-%比對出來就是了嗎？其實不是，會有：
-%* 歧義
-%* 
-
-%
-%
-%   砍掉重練...
-%
-%
-
 % Pattern Extraction
 % Pattern Matching
 %   O(mn)?
 % Some statistics e.g. how many pattern, how long, ...etc
-
-%利用PATTY所提供的關係與樣式，本研究假設當在文句中看到一個樣式時，
-%該處便存在該樣式於PATTY中所屬的關係，亦即實體特性。
-%本研究將嘗試利用樣式來偵測表\ref{t:yago-relation}中的YAGO關係是否存在一份文件之中。
-
-%
-%\subsection{偵測步驟}
-%
-%本研究自內容串流的文件中偵測實體特性的偵測步驟主要可以分成兩大步驟 ：
-%(1)樣式比對（Pattern Matching）與(2)特性篩選（Property Filtering）。
-%
-%當一份文件出現時，偵測系統會先將
-%
-%\section{樣式比對}
-%
-%\section{特性篩選}
-%
-%\section{}
-%\section{消除歧義}
-
 
