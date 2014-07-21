@@ -11,7 +11,7 @@
 而實體的特性之一：實體間關係，則可以語句樣式表現，
 因此本研究主要利用語句樣式來偵測這樣的特性是否存在。
 本章節將介紹所使用的資源、
-樣式比對與特性篩選的問題與解決方法。
+樣式比對、樣式篩選與特性歧異的問題與解決方法。
 
 \section{以樣式偵測特性}
 當我們在字裡行間要描述一個實體的特性時，
@@ -33,7 +33,7 @@
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{images/00-tmp-img}    %TODO
-    \caption{以樣式偵測特性流程圖一}
+    \caption{以樣式偵測特性流程概念}
     \label{i:process-v1}
 \end{figure}
 
@@ -45,12 +45,45 @@ YAGO關係的領域與範圍，
 
 光是這樣的流程並不足以偵測實體特性。
 使用樣式來偵測實體特性還會有樣式覆蓋度（Coverage）、
-品質（Quality）、可信賴度（Reliability）與歧異性的問題。
+品質（Quality）、可信賴度（Reliability）與歧異性（Ambiguity）的問題。
 
+樣式覆蓋度問題是指對於某個實體的特性，
+在關係表內屬於這個實體特性的樣式佔所有可以表達該特性的樣式之比例。
+例如一個實體特性可以用100種樣式來描述，
+但只找出了其中70種，
+這樣就沒有辦法找到以其他30種樣式來描述該特性的句子。
 
+樣式的品質則是一個字串到底能不能夠作為一個樣式，    %FIXME
+一個樣式的品質不高，那麼這樣的樣式有可能太廣泛的出現在句子之中，
+致使這樣的樣式沒有辦法區辨出實體屬性。
+例如PATTY關係釋義中的DBpedia:manager內的樣式「hired」就只有這一個單字，
+用以描述實體特性顯得太廣泛了些，
+以此擷取回的文章有包含實體特性的比例就較低。
 
-% 描述樣式覆蓋度
-樣式覆蓋度問題是對某個實體特性，這些樣式
+樣式可信賴度則是一個樣式到底能不能用來表達實體特性。
+例如，對於特性YAGO:diedIn，以「since worked in」來描述完全文不對題。
+
+而為了處理樣式的品質、可信賴度問題，
+應該要在圖\ref{i:process-v1}流程中的關聯表與樣式比對中增加一個樣式篩選的步驟，
+篩選出可信賴、有一定品質的樣式來進行樣式比對，
+此部份將於第\ref{s:select-pattern}小節說明詳細內容。
+
+經過樣式比對後，每篇文章可能存在數個樣式，
+如果在關聯表中每個樣式只對映到一個關係，
+那便沒有歧義。
+但一個樣式可能存在於多個實體特性的關聯表內，
+例如樣式「first met with」就被PATTY認為可以表示5種特性（hasAcademicAdvisor、isKnownFor、isMarriedTo、influences、hasChild）。
+因此在樣式被比對出來之後，整個偵測流程中還需要一個消歧義的步驟。
+這個部份將在第\ref{s:pattern-disambiguity}節中說明。
+
+補上了樣式篩選與消歧義後的流程圖應修正為圖\ref{i:process-v2}。
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/00-tmp-img}    %TODO
+    \caption{以樣式偵測特性流程}
+    \label{i:process-v2}
+\end{figure}
 
 %樣式 -> 
 %
@@ -60,6 +93,12 @@ YAGO關係的領域與範圍，
 
 \section{樣式比對}
 \label{s:pattern-match}
+
+\section{樣式篩選}
+\label{s:select-pattern}
+
+\section{特性消歧義}
+\label{s:pattern-disambiguity}
 
 %樣式比對
 %
@@ -87,7 +126,7 @@ YAGO關係的領域與範圍，
 %本研究將嘗試利用樣式來偵測表\ref{t:yago-relation}中的YAGO關係是否存在一份文件之中。
 
 %t:yago-relation
-%\input{tables/yagoRela}
+\input{tables/yagoRela}
 %
 %\subsection{偵測步驟}
 %
