@@ -111,11 +111,19 @@ PATTY中提供的25個YAGO關係有43,124個樣式，
 
 % Prefix-Tree
 為了讓樣式比對可以有效率些，
-我們將所有的樣式建立成一顆前綴樹（Prefix Tree），
-如圖\ref{i:pattern-prefix-tree}所示。
+我們將所有的樣式建立成一顆前綴樹（Prefix Tree）。
 先將所有首字相同的樣式合併成同一個節點，
 再看第二個字是否相同，如果不同就分支出去，
-以此類推，最後再連結到樣式可能屬於的特性。
+以此類推，最後再連結到樣式編號，
+即可透過編號查詢該樣式可能表示的實體特性。
+如圖\ref{i:pattern-prefix-tree}所示，
+四個樣式「was born」、「was born at」、「was born [[det]] village」和「was bron [[det]] willage in」的首字皆為was，所以併成一個節點。
+第二個字也都相同，所以也併成一個節點。
+而此時「was born」已經完成了，所以born節點下新增一個樣式編號的節點。
+剩下三個樣式的第三個字有詞性標記「[[det]]」和單字「at」，
+便在born節點下新增[[det]]和at節點。at節點完成了「was bron at」樣式，
+而[[det]]節點則繼續將後續的字加入這棵前綴樹上，
+最後這棵樹上所有葉子都是一個樣式編號。
 
 \begin{figure}
     \centering
@@ -125,7 +133,50 @@ PATTY中提供的25個YAGO關係有43,124個樣式，
 \end{figure}
 
 % Algo
+有了樣式前綴樹後，
+再來就是利用這棵樹來比對句子中是否有出現其中的樣式。
+演算法\ref{a:pattern-match}描述了比對的過程。
 
+\begin{algorithm}
+    \caption{樣式比對演算法}
+    \label{a:pattern-match}
+    \begin{algorithmic}[1]
+        \Require  
+            S: 句子;
+            T: 樣式前綴樹;
+        \Ensure
+            P: 有出現的樣式
+        \State 初始化P=[], 暫存陣列tmpP=[]
+        \State 對S進行詞性標記
+        \For{i from 0 to length of S}
+            \State (word,POStag) $\gets$ S[i]
+        %\ForAll{(word,POStag) {\bf in} S}
+            \ForAll{possiblePattern {\bf in} tmpP}
+                \If{word or POStag {\bf in} T's possiblePattern.depthInTree+1 level nodes}
+                    \State continue
+                \Else
+                    \If{T's possiblePattern.depthInTree+1 level node is PatternID}
+                        \State {\bf add} (PatternID,startPoint,i as endPoint) {\bf into} P
+                    \EndIf
+                    \State {\bf remove} possiblePattern {\bf from} tmpP
+                \EndIf
+            \EndFor
+            \If{word or POStag {\bf in} T's first level nodes}
+            \State {\bf add} (depthInTree,i as startPoint) {\bf into} tmpP
+            \EndIf
+        \EndFor
+        
+        % 移除重疊的短樣式，只留重疊中最長的。TODO
+        %\State {\bf sort} P by startPoint
+        %\ForAll{pattern in P}
+        %    \If{pattern overlap with other patterns}
+        %
+        %    
+        %\EndFor
+
+        \State \Return P
+    \end{algorithmic}
+\end{algorithm}
 % Try to use Algorithm package?
 
 % Complexity
