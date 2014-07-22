@@ -95,7 +95,7 @@ YAGO關係的領域與範圍（表\ref{t:yago-relation}），
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.7\textwidth]{images/00-tmp-img}    %TODO
+    \includegraphics[width=1\textwidth]{images/03-pattern-parallel}
     \caption{平行處理架構}
     \label{i:process-parallel}
 \end{figure}
@@ -137,50 +137,60 @@ PATTY中提供的25個YAGO關係有43,124個樣式，
 再來就是利用這棵樹來比對句子中是否有出現其中的樣式。
 演算法\ref{a:pattern-match}描述了比對的過程。
 
+演算法\ref{a:pattern-match}的輸入是欲比對的文章A以及已經預先建立完成的樣式前綴樹T，
+輸出是文章A所出現過的樣式及其出現的位置。
+對於文章A中的每個句子S，由於樣式包含詞性標記，
+因此需要將S標記，實驗中使用的是Textblob的APTagger\footnote{https://github.com/sloria/textblob-aptagger}來進行快速的詞性標記。
+接下來開始從句子的第一個字開始，
+如果這個字或其詞性標記有出現在樣式前綴樹Root下的第一層節點中出現，
+便將這個節點和此字於句子中的位置記錄下來。
+再看句子中的下一個字，
+此時先檢查暫存紀錄中的字是不是能夠繼續往下走這棵樣式前綴樹，
+如果可以往下走代表還沒有發現樣式；
+如果子節點已經是帶有樣式編號的樹葉的話，
+就是發現了一個樣式，然後紀錄下來。
+如果發現沒有辦法繼續往下走，
+則代表在未來的步驟中不可能走到任何一個紀錄樣式編號的樹葉，
+因此將這組紀錄從暫存紀錄中移除。
+最後便可以知道有哪些樣式出現在文章中以及出現的位置。
+
 \begin{algorithm}
     \caption{樣式比對演算法}
     \label{a:pattern-match}
     \begin{algorithmic}[1]
         \Require  
-            S: 句子;
-            T: 樣式前綴樹;
+            $A$: 文章;
+            $T$: 樣式前綴樹;
         \Ensure
-            P: 有出現的樣式
-        \State 初始化P=[], 暫存陣列tmpP=[]
-        \State 對S進行詞性標記
-        \For{i from 0 to length of S}
-            \State (word,POStag) $\gets$ S[i]
-        %\ForAll{(word,POStag) {\bf in} S}
-            \ForAll{possiblePattern {\bf in} tmpP}
-                \If{word or POStag {\bf in} T's possiblePattern.depthInTree+1 level nodes}
-                    \State continue
-                \Else
-                    \If{T's possiblePattern.depthInTree+1 level node is PatternID}
-                        \State {\bf add} (PatternID,startPoint,i as endPoint) {\bf into} P
+            $P$: 文章$A$中出現的樣式;
+        \State $P\gets$[]
+        \Comment{初始化$P$}
+        \ForAll{Sentence $S$ {\bf in} $A$ }
+            \State 對$S$進行詞性標記
+            \State $tmpP\gets$[]
+            \Comment{初始化暫存陣列}
+            \For{$i$ {\bf from} 0 to length of $S$}
+                \State ($word$,$POStag$) $\gets$ $S[i]$
+                \ForAll{$possiblePattern$ {\bf in} $tmpP$}
+                    \If{$word$ or $POStag$ {\bf in} $T$'s $possiblePattern$.depthInTree+1 level nodes}
+                        \State continue
+                    \Else
+                        \If{$T$'s $possiblePattern$.depthInTree+1 level node is $PatternID$}
+                            \State {\bf add} ($PatternID$,$startPoint$,$i$ as $endPoint$) {\bf into} $P$
+                        \EndIf
+                        \State {\bf remove} $possiblePattern$ {\bf from} $tmpP$
                     \EndIf
-                    \State {\bf remove} possiblePattern {\bf from} tmpP
+                \EndFor
+                \If{$word$ or $POStag$ {\bf in} $T$'s first level nodes}
+                \State {\bf add} ($depthInTree$,$i$ as $startPoint$) {\bf into} $tmpP$
                 \EndIf
             \EndFor
-            \If{word or POStag {\bf in} T's first level nodes}
-            \State {\bf add} (depthInTree,i as startPoint) {\bf into} tmpP
-            \EndIf
         \EndFor
-        
-        % 移除重疊的短樣式，只留重疊中最長的。TODO
-        %\State {\bf sort} P by startPoint
-        %\ForAll{pattern in P}
-        %    \If{pattern overlap with other patterns}
-        %
-        %    
-        %\EndFor
-
         \State \Return P
     \end{algorithmic}
 \end{algorithm}
-% Try to use Algorithm package?
 
-% Complexity
-
+演算法\ref{a:pattern-match}中同時於暫存紀錄中的可能樣式最多只會跟樣式前綴樹的深度相同，若文章的長度是n個字、前綴樹深度m，則演算法\ref{a:pattern-match}的時間複雜度是O(mn)。
 
 \section{樣式篩選}
 \label{s:select-pattern}
