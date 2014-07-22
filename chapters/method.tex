@@ -32,7 +32,7 @@
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.7\textwidth]{images/00-tmp-img}    %TODO
+    \includegraphics[width=0.9\textwidth]{images/03-process-v1}
     \caption{以樣式偵測特性流程概念}
     \label{i:process-v1}
 \end{figure}
@@ -88,7 +88,7 @@ YAGO關係的領域與範圍（表\ref{t:yago-relation}），
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.7\textwidth]{images/00-tmp-img}    %TODO
+    \includegraphics[width=0.9\textwidth]{images/03-process-v2}
     \caption{以樣式偵測特性流程}
     \label{i:process-v2}
 \end{figure}
@@ -107,16 +107,19 @@ YAGO關係的領域與範圍（表\ref{t:yago-relation}），
 PATTY中提供的25個YAGO關係有43,124個樣式，
 但其中有不少是重複出現的，
 實際上總共有19,031個獨特的樣式，
-如果對每個句子都做19.031次比較顯然不是一個好方法。
+如果對每個句子都做19,031次比較顯然不是一個好方法。
 
 % Prefix-Tree
 為了讓樣式比對可以有效率些，
 我們將所有的樣式建立成一顆前綴樹（Prefix Tree），
 如圖\ref{i:pattern-prefix-tree}所示。
+先將所有首字相同的樣式合併成同一個節點，
+再看第二個字是否相同，如果不同就分支出去，
+以此類推，最後再連結到樣式可能屬於的特性。
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.7\textwidth]{images/00-tmp-img}    %TODO
+    \includegraphics[width=0.9\textwidth]{images/03-pattern-prefix-tree}
     \caption{樣式前綴樹}
     \label{i:pattern-prefix-tree}
 \end{figure}
