@@ -109,7 +109,6 @@ PATTY中提供的25個YAGO關係有43,124個樣式，
 實際上總共有19,031個獨特的樣式，
 如果對每個句子都做19,031次比較顯然不是一個好方法。
 
-% Prefix-Tree
 為了讓樣式比對可以有效率些，
 我們將所有的樣式建立成一顆前綴樹（Prefix Tree）。
 先將所有首字相同的樣式合併成同一個節點，
@@ -132,7 +131,6 @@ PATTY中提供的25個YAGO關係有43,124個樣式，
     \label{i:pattern-prefix-tree}
 \end{figure}
 
-% Algo
 有了樣式前綴樹後，
 再來就是利用這棵樹來比對句子中是否有出現其中的樣式。
 演算法\ref{a:pattern-match}描述了比對的過程。
@@ -190,16 +188,23 @@ PATTY中提供的25個YAGO關係有43,124個樣式，
     \end{algorithmic}
 \end{algorithm}
 
-演算法\ref{a:pattern-match}中同時於暫存紀錄中的可能樣式最多只會跟樣式前綴樹的深度相同，若文章的長度是n個字、前綴樹深度m，則演算法\ref{a:pattern-match}的時間複雜度是O(mn)。
+演算法\ref{a:pattern-match}中同時於暫存紀錄中的可能樣式最多只會跟樣式前綴樹的深度相同，
+若文章的長度是n個字、每個字對多可能檢查暫存同前綴樹深度m次，
+則演算法\ref{a:pattern-match}的時間複雜度是O(mn)。
 
 \section{樣式篩選}
 \label{s:select-pattern}
+樣式篩選是希望在建立樣式前綴樹給樣式比對使用前，
+先對樣式進行一些篩選，以解決樣式品質、可信賴度甚至是歧異問題。
+
+
+
 
 \section{特性消歧義}
 \label{s:pattern-disambiguity}
 
-% Pattern Extraction
-% Pattern Matching
-%   O(mn)?
+%正規化
+%前後文
+
 % Some statistics e.g. how many pattern, how long, ...etc
 
