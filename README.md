@@ -27,5 +27,5 @@ This is copy from @tzhuan 's [臺灣大學碩博士論文 XeLaTeX 模板](https:
 
 ### Windows
 
-* 留下字形檔案，下載[Ubuntu](http://www.ubuntu.com/)或找一台[蘋果電腦](http://www.apple.com/tw/mac/)。
+* 留下字形檔案，下載[Ubuntu](http://www.ubuntu.com/)並安裝或找一台[蘋果電腦](http://www.apple.com/tw/mac/)。
 
