@@ -9,7 +9,7 @@
 
 本章將分別介紹知識庫相關的資源與研究，
 涵蓋了結構化知識庫（Structural Knowledge Base）、
-知識庫加速（Knowledge Base Accerleration）與知識庫的應用（Application of Knowledge Base），
+知識庫加速（Knowledge Base Accerleration）與知識庫的應用（Applications of Knowledge Base），
 以及樣式與實體間關係的相關研究。
 
 \section{知識庫}
@@ -21,7 +21,7 @@ DBpedia、YAGO與Freebase都提供以TTL（Terse RDF\footnote{Resource Descripti
 
 DBpedia是一個大型、多語言的知識庫，自Wikipedia擷取知識。
 透過Wikipedia條目內的資訊框（Inforbox），擷取實體的特性，並連結實體。
-並進一步整理了資訊框內的特性，以人工將語意相同的實體特性合併。
+同時進一步整理了資訊框內的特性，以人工將語意相同的實體特性合併。
 
 YAGO除了自Wikipedia擷取資訊外，還搭配了WordNet\footnote{http://wordnet.princeton.edu/}，
 建立一個輕量、高品質與覆蓋度的實體與關係資料庫。
@@ -29,7 +29,7 @@ YAGO除了自Wikipedia擷取資訊外，還搭配了WordNet\footnote{http://word
 並定義關係的領域（Domain）與範圍（Range）、
 階層式架構的實體類型（Types）與其他資源如DBpedia、WordNet間的連結。
 
-Freebase是一個用以結構化人類知識的社群協作的可擴展元組（Scalable tuple）資料庫。
+Freebase是一個人類知識社群協作的結構化可擴展元組（Scalable tuple）資料庫。
 與Wikipedia一樣，是由志願者創建與維護其中的資料，並與其它知識庫亦互有連結。
 
 \subsection{知識庫加速}
@@ -97,7 +97,7 @@ $n(word)$是字在候選實體中出現的次數。
 %
 \section{樣式與實體間關係}
 
-實體間的關係是可能隨著時間而產生變化的，
+實體間的關係是可能隨著時間而產生變化，
 知道哪些關係會變化對於協助知識庫的更新是有幫助的，可以更注意那些會變動的關係。
 \cite{relationsByTime} 提到有些實體間的關係是相對恆常的，
 例如《1Q84》的作者是村上春樹是不會改變的事實；
