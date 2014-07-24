@@ -17,20 +17,43 @@
 \label{s:dataset}
 
 為了模擬內容串流文件，
-本研究以Wikipedia的條目文章作為
+本研究以Wikipedia的條目文章作為內容串流中的文件，
+自2013年3月的Wikipedia Dumps\footnote{http://dumps.wikimedia.org/}擷取文件。
 
+由於一開始並無文件中包含哪些實體特性的正確資料，
+而YAGO的YAGO Facts提供了<subject, property, object>的資訊，
+因此我們使用YAGO Facts的propety作為參考答案，
+並將subject連結至Wikipedia的文章，
+這樣就有每篇文件具有哪些特性的參考答案。
 
-% Wikipedia
-% YAGO
+樣式則是使用PATTY提供的樣式釋義，其包含了知識庫定義的關係，
+即本研究擬偵測之實體特性，以及可用以表達該特性之樣式集。
+實驗採用的是其中的YAGO關係（YAGO Relations），一共有25組關係，
+但其中一組關係（YAGO:Produced）在YAGO中沒有找到對映的Wikipedia條目，
+因此僅對餘下24組關係進行實驗。
 
-% PATTY
+接下來只留下存在這24種特性的Wikipedia條目，
+為了防止YAGO Facts中存在某特性但文章中卻根本沒有提及的狀況發生，
+我們只留下<subject,property,object>中subject條目內有出現object字詞片段的特性留下，
+若object內的字根本沒有出現在文章中，則捨去這個特性。
+經過處理後，最後共有334,469篇條目作為測試資料集。
+表\ref{t:yago-coverage}統計了在不同的信心值下與不同的樣式歧義下，
+樣式的數量以及含有這些樣式的文件總數。
+
+%t:yago-coverage
+\input{tables/yagoCoverage}
+
+由於資料集內的Wikipeida條目皆是描寫實體，
+在假設文章的內容都是以描寫該實體的前提下，
+可以利用YAGO Simple Types作為該文描述實體之類型，
+搭配樣式的領域（Domain）資訊輔助偵測。
 
 \section{評估標準}
 \label{s:eval}
 在偵測系統的效能方面，
 我們希望了解對每一個實體特性，
 利用樣式自文章中偵測該特性的效能。
-因此，以精確率（Precision）、召回率（Recall）、F1分數（F1 Score）進行評估。
+因此，以精確率（Precision）、召回率（Recall）、$F_1$分數（$F_1$ Score）進行評估。
 精確率公式如式\ref{f:precision}，召回率公式如式\ref{f:recall}。
 
 \begin{equation}
@@ -49,15 +72,16 @@
 精確率評估在尋回的文件之中有多少文件真正存在該特性；
 召回率評估在真正擁有該特性的文件中有多少被系統偵測到。
 
-F1分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1}，為精確率與召回率的調和平均。
+$F_1$分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1}，為精確率與召回率的調和平均。
 
 \begin{equation}
     \label{f:f1}
     F_1\ Score = \frac{2\times Precision \times Recall}{Precision + Recall}
 \end{equation}
 
-除了評估個別特性的效能之外，
-也以宏觀平均（Macro Average），以精確率為例，如式\ref{f:macro}，召回率亦同，以及微觀平均（Micro Average），以精確率為例，如式\ref{f:micro}，召回率亦同，評估整體偵測的效能。
+除了評估個別特性的效能之外，以宏觀平均（Macro Average）及微觀平均（Mirco Average）分別計算精確率與召回率及$F_1$分數來評估整體效能。
+以精確率為例，宏觀平均的計算如式\ref{f:macro}，
+而微觀平均的計算則如式\ref{f:micro}。
 
 \begin{equation}
     \label{f:macro}
