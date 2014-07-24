@@ -25,9 +25,48 @@
 
 \section{評估標準}
 \label{s:eval}
-於本研究希望了解對每一個實體特性，
-利用樣式自文章中偵測該特性的效能，
-以精確率（Precision）與招回率（Recall）評估使用樣式偵測每個
+在偵測系統的效能方面，
+我們希望了解對每一個實體特性，
+利用樣式自文章中偵測該特性的效能。
+因此，以精確率（Precision）、召回率（Recall）、F1分數（F1 Score）進行評估。
+精確率公式如式\ref{f:precision}，召回率公式如式\ref{f:recall}。
+
+\begin{equation}
+    \label{f:precision}
+    Precision = \frac{|\{relevant\ documents\}\cap\{retrived\ documents\}|}{|\{retrived\ documents\}|}
+\end{equation}
+
+\begin{equation}
+    \label{f:recall}
+    Recall = \frac{|\{relevant\ documents\}\cap\{retrived\ documents\}|}{|\{relevant\ documents\}|}
+\end{equation}
+
+對於一個實體特性，經過偵測之後會有被標為有此特性的文件與無此特性的文件。
+其中，相關的文件（Relevant documents）即真正存在該特性之文件；
+尋回的文件（Retrived documents）即偵測系統標記為擁有此特性之文件。
+精確率評估在尋回的文件之中有多少文件真正存在該特性；
+召回率評估在真正擁有該特性的文件中有多少被系統偵測到。
+
+F1分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1}，為精確率與召回率的調和平均。
+
+\begin{equation}
+    \label{f:f1}
+    F_1\ Score = \frac{2\times Precision \times Recall}{Precision + Recall}
+\end{equation}
+
+除了評估個別特性的效能之外，
+也以宏觀平均（Macro Average），以精確率為例，如式\ref{f:macro}，召回率亦同，以及微觀平均（Micro Average），以精確率為例，如式\ref{f:micro}，召回率亦同，評估整體偵測的效能。
+
+\begin{equation}
+    \label{f:macro}
+    Macro\ Avg\ Precision=\frac{\sum_i^n precision_i}{n}
+\end{equation}
+
+\begin{equation}
+    \label{f:micro}
+    Mirco\ Avg\ Precision=\frac{\sum_i^n |\{relevant\ documents\}_i|\cap|\{retrived\ documents\}_i|}{\sum_i^n |\{retrived\ documents\}_i|}
+\end{equation}
+
 
 \section{實驗結果}
 \label{s:result}
