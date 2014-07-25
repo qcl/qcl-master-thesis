@@ -37,8 +37,11 @@
 我們只留下<subject,property,object>中subject條目內有出現object字詞片段的特性留下，
 若object內的字根本沒有出現在文章中，則捨去這個特性。
 經過處理後，最後共有334,469篇條目作為測試資料集。
+
 表\ref{t:yago-coverage}統計了在不同的信心值下與不同的樣式歧義下，
 樣式的數量以及含有這些樣式的文件總數。
+由表中可以看出其實當樣式歧義度超過5之後所涵蓋的文件增長速度已經趨於平緩，
+因此本實驗最多將只採用歧義度小於等於5的樣式進行。
 
 %t:yago-coverage
 \input{tables/yagoCoverage}
@@ -50,6 +53,10 @@
 
 \section{評估標準}
 \label{s:eval}
+在偵測系統的效率方面，
+我們以每顆核心在每分鐘內可以處理多少文件來評估，
+以及要達到TREC知識庫加速競賽的每小時處理約100,000篇的規模需要多少運算核心或機器。
+
 在偵測系統的效能方面，
 我們希望了解對每一個實體特性，
 利用樣式自文章中偵測該特性的效能。
@@ -93,9 +100,25 @@ $F_1$分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1
     Mirco\ Avg\ Precision=\frac{\sum_i^n |\{relevant\ documents\}_i|\cap|\{retrived\ documents\}_i|}{\sum_i^n |\{retrived\ documents\}_i|}
 \end{equation}
 
-
 \section{實驗結果}
 \label{s:result}
+
+\subsection{效率}
+在圖\ref{i:process-v2}的偵測流程之中，本實驗將其拆解為兩個部份來評估效能。
+前半部份為樣式比對的效率，後半部份為特性消歧義的效率。
+
+樣式比對的效率在時脈為2.5GHz的中央處理器為每顆核心每分鐘592份文件，
+特性消歧義的效率在同樣條件下為每顆核心每分鐘2750份文件。
+要在一小時內處理100,000文件僅需要3顆核心即可完成。
+而本實驗使用一台配備時脈2.5GHz、24核心中央處理器的工作站僅需半小時即可處理完全部約330,000份文件。
+
+\subsection{原始效能}
+
+% baseline
+
+\subsection{樣式篩選}
+
+\subsection{特性消歧義}
 
 %\subsecion{}
 %錯誤分析
