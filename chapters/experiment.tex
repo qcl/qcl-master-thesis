@@ -179,8 +179,8 @@ $F_1$分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1
     \label{i:reliability-f1}
 \end{figure}
 
-% t:reliability % TODO
-%\input{table/reliability.exp}
+% t:reliability 
+\input{tables/reliability.exp}
 
 \subsubsection{歧義度}
 由表\ref{t:yago-coverage}觀察，當歧義度不超過5時所能涵蓋的文件數量就已經非常多了，
@@ -196,9 +196,114 @@ $F_1$分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1
     \label{i:degree}
 \end{figure}
 
+經過了對信心值、可信賴度與歧義度的實驗，
+可以知道透過篩選信心值與可信賴度可以提升精確率，
+而使用歧義度高的樣式時可以提升召回率。
+
 \subsection{特性消歧義}
 \subsubsection{實體類型資訊}
-\subsubsection{正規化？}
+由於特性具有領域與範圍，這裡假設文章中的語句所描述的對象都是條目名稱所指之實體，
+便可以利用實體的類型資訊與特性領域進行比對，將不合類型的特性消除掉。
+圖\ref{i:type}便是加入實體類型資訊前後對不同歧義度的效能比較結果。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/04-type}
+    \caption{加入實體類型資訊前後效能比較 }
+    \label{i:type}
+\end{figure}
+
+加入實體類型資訊後，使得精確率有大幅提升，
+例如以使用歧義度不大於2的樣式時，如表\ref{t:type}數據所示，
+actedIn、happendIn都有大幅度的精確率提升，甚至是本來精確率就已經很高的isLocatedIn都有相當提升。
+
+%t:t:type
+\input{tables/type.exp.tex}
+
+\subsubsection{特性篩選}
+當使用具有特性歧義的樣式時，必須設法消除歧義。
+而這裡的特性選擇是多選多的問題，以下實驗了幾種挑選特性的策略：
+(1) 只選擇一個特性、 (2) 篩選門檻0.5、 (3) 篩選門檻0.75、 (4) 全選。
+
+其中(1)、(2)、(3)利用過去文件統計之結果，以過去的正確率正規化後排序，
+(1)選擇正確率最高的特性，(2)與(3)選擇門檻值以上的特性。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/04-macro-nol}
+    \caption{不同歧義度下篩選策略效能表現（宏觀平均）}
+    \label{i:macro-nol}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/04-micro-nol}
+    \caption{不同歧義度下篩選策略效能表現（微觀平均）}
+    \label{i:micro-nol}
+\end{figure}
+
+圖\ref{i:macro-nol}、\ref{i:micro-nol}呈現實驗結果，
+(1)只選擇了一個忽略了可能有複數個特性存在，
+(4)全選則太寬鬆，以至於精確率降太多。
+
+由巨觀平均的角度來看，
+在使用任何歧義度之樣式的情況下，
+設定0.5的正確篩選門檻的表現都來得比其他策略還要好，
+基本上都是精確率小幅提升，而召回率沒有太大改變。
+是一個介於(1)和(4)之間的折衷策略。
+
+從微觀平均的角度來看，
+則是篩選門檻0.75的表現比較好，
+主要則是因為特性hasChild的False Postive較篩選門檻0.5少了約一萬份的文件所致。
+
 \subsubsection{簡單貝氏分類器}
-%\subsecion{}
-%錯誤分析
+由於樣式有出現仍不一定具有特性，我們認為這與樣式出現的前後文可能有關聯，
+因此針對每個特性，以過去的文件訓練了24個簡單貝氏分類器。
+當樣式出現時，以分類器將樣式出現的句子分為存在或不存在該特性。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/04-nbc}
+    \caption{使用簡單貝氏分類器前後效能比較}
+    \label{i:nbc}
+\end{figure}
+
+%t:nbc
+\input{tables/nbc.exp}
+
+圖\ref{i:nbc}顯示了使用簡單貝氏分類器對不同歧義度的效能比較。
+而表\ref{t:nbc}則是歧義度不小於5、使用實體類型資訊、樣式篩選門檻0.5時有無使用分類器的效能比較。
+
+圖\ref{i:nbc}與表\ref{t:nbc}中可以看到使用了分類器後整體的效能有了大幅度的提升，
+從個別特性來看，大多數的特性的精確度都有了大幅的提升。
+而isKnownFor、isPoliticianOf則是因為有這些特性訓練時正面的句子太少，
+以至於分類時完全沒有正向的結果。
+表\ref{t:yago-instance}也顯示這兩個特性的文件數與其他特性比起來算是比較少了些。
+
+\subsection{錯誤分析}
+
+不管是整體或個別特性偵測的效能以精確率、召回率作為評估標準，
+其中False Postive對此二指標的影響甚巨，
+因此我們分析了造成False Postive的原因。
+由於實驗是經過樣式比對、特性消歧義等步驟，
+若經過了特性消歧義仍然沒有回答出正確的特性，
+那就造成了False Postive。
+
+False Postive的成因基本上可以分成兩類。
+第一類是在候選的特性中沒有選擇出正確的特性，
+這代表選擇其他的特性就有機會答對，但這隱含了有樣式出現就一定要選擇特性。
+第二類是樣式有出現，但根本不存在特性。
+
+圖\ref{i:error}分析了使用分類器前後個特性的False Postive中的成分，
+圖中的黑、白線條就是使用分類器前後第二類錯誤佔所有錯誤中的比例。
+其實大多數的錯誤都是屬於第二類錯誤，
+使用了分類器後第二類在部分特性中所占的比例有略微下降，
+但然仍是最大宗的錯誤，要如何有效地克服這些錯誤是未來的研究課題之一。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{images/04-error}
+    \caption{使用簡單貝氏分類器前後錯誤分析}
+    \label{i:error}
+\end{figure}
+
