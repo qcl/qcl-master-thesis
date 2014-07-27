@@ -143,7 +143,7 @@ $F_1$分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1
 我們利用PATTY提供的信心值進行樣式的篩選，選定了門檻值分別為0（沒有門檻）、0.7、0.8與0.9，
 只使用樣式信心值大於門檻值的樣式進行偵測實驗，其結果的宏觀平均與微觀平均$F_1$分數如圖\ref{i:conf-f1}所示。
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.85\textwidth]{images/04-conf-f1}
     \caption{無歧義度下F1分數平均隨信心值變化圖}
@@ -153,17 +153,48 @@ $F_1$分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1
 就整體效能而言，設定信心值門檻值並沒有辦法提升系統效能，反而使效能變差。
 這是由於設定門檻值後，通過門檻值的樣式數量減少，導致召回率下降太多，
 到門檻值為0.9時，有部分的特性（hasCapital, isKnownFor）已經沒有可用的樣式。
-但部分的特性$F_1$分數因精確率比較大幅度的提升而略微上昇，表\ref{}中，
-特性%TODO: list those property
-的精確率皆有比較大幅度的提升。
+但部分的特性$F_1$分數因精確率比較大幅度的提升而略微上昇，表\ref{t:confidence}中，
+信心值門檻由0.8昇至0.9，
+特性actedIn、created、diedIn、hasAcademicAdvisor、holdsPoliticalPosition、influences、isMarriedTo等的精確率皆有較大幅度的提升。
 
-% TODO
-% build table
+%t:confidence-f1
+\input{tables/confidence.exp}
 
 \subsubsection{可信賴度}
+透過了過去的統計資料，也就是過去樣式出現時具有特性的比例，對可信賴度進行實驗。
+設定了比例為0、0.3與0.5三個門檻值。
 
+實驗的結果呈現如圖\ref{i:reliability-f1}，可以看出當門檻值調整至0.3時，
+整體系統效能有提升，但再向上調整時就沒有太多上升。
+原因是因為當門檻值提升至0.5時，
+有些特性（hasCapital、holdsPoliticalPosition、isKnownFor、isLeaderOf、isPoliticianOf、participatedIn）已經沒有可用的樣式。
+可信賴度的門檻設定留下了在過去文件中對精確率來說比較好的樣式，
+由表\ref{t:reliability}也可以看到精確率隨著門檻值提高而升高，
+當然因為使用的樣式越來越少，所以召回率也隨之下降。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/04-reliability-f1}
+    \caption{無歧義度下F1分數平均隨可信賴度變化圖}
+    \label{i:reliability-f1}
+\end{figure}
+
+% t:reliability % TODO
+%\input{table/reliability.exp}
 
 \subsubsection{歧義度}
+由表\ref{t:yago-coverage}觀察，當歧義度不超過5時所能涵蓋的文件數量就已經非常多了，
+因此這裡測試了歧義度由1到5，觀察系統效能的變化結果如圖\ref{i:degree}，
+由於使用越來越多的樣式，因此召回率快速提高，
+但也因此有了歧義問題，使得精確率下降，也讓$F_1$分數下降。
+由於有歧義問題，後續的實驗將嘗試消歧義的方法與分析結果。
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{images/04-degree}
+    \caption{F1分數與召回率隨歧義度變化圖}
+    \label{i:degree}
+\end{figure}
 
 \subsection{特性消歧義}
 \subsubsection{實體類型資訊}
