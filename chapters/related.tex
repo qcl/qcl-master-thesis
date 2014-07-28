@@ -9,18 +9,18 @@
 
 本章將分別介紹知識庫相關的資源與研究，
 涵蓋了結構化知識庫（Structural Knowledge Base）、
-知識庫加速（Knowledge Base Accerleration）與知識庫的應用（Applications of Knowledge Base），
+知識庫加速（Knowledge Base Accerleration）、與知識庫的應用（Applications of Knowledge Base），
 以及樣式與實體間關係的相關研究。
 
 \section{知識庫}
 \subsection{結構化知識庫}
 相對於Wikipedia以文章來儲存知識，\cite{dbpedia} 的DBpedia、
-\cite{yago} 的YAGO以及\cite{freebase} 的Freebase等都以結構化的方式儲存知識。
-DBpedia、YAGO與Freebase都提供以TTL（Terse RDF\footnote{Resource Description Framework} Triple Language）格式儲存的資料，
+\cite{yago} 的YAGO、以及\cite{freebase} 的Freebase等都以結構化的方式儲存知識。
+DBpedia、YAGO、與Freebase都提供以TTL（Terse RDF\footnote{Resource Description Framework} Triple Language）格式儲存的資料，
 以供處理與利用。
 
 DBpedia是一個大型、多語言的知識庫，自Wikipedia擷取知識。
-透過Wikipedia條目內的資訊框（Inforbox），擷取實體的特性，並連結實體。
+透過Wikipedia條目內的資訊框（Infobox），擷取實體的特性，並連結實體。
 同時進一步整理了資訊框內的特性，以人工將語意相同的實體特性合併。
 
 YAGO除了自Wikipedia擷取資訊外，還搭配了WordNet\footnote{http://wordnet.princeton.edu/}，
@@ -30,24 +30,20 @@ YAGO除了自Wikipedia擷取資訊外，還搭配了WordNet\footnote{http://word
 階層式架構的實體類型（Types）與其他資源如DBpedia、WordNet間的連結。
 
 Freebase是一個人類知識社群協作的結構化可擴展元組（Scalable tuple）資料庫。
-與Wikipedia一樣，是由志願者創建與維護其中的資料，並與其它知識庫亦互有連結。
+與Wikipedia一樣，是由志願者創建與維護其中的資料，並與其它知識庫互有連結。
 
 \subsection{知識庫加速}
 
 \cite{kba2012,kba2013}縱覽了2012、2013年的TREC知識庫加速競賽，
 連續兩年都有的CCR（Cumulative Citation Recommendation）任務是過濾內容串流，
 推薦對更新目標實體有幫助的文章，以縮短知識產生與知識庫更新之間的時間差。
-圖\ref{i:kba-corps}是這兩年CCR任務中內容串流的資料量與目標實體的數量，
+表\ref{t:kba-corps} 是這兩年CCR任務中內容串流的資料量與目標實體的數量，
 內容串流中每小時約有100,000份文件。
 CCR任務主要專注在尋找文章中是否有出現目標實體（Mentions/Zero Mentions），
 再進一步依照有幫助的程度分成四個等級（Garbage/Neutral/Useful/Vital）。
 
-\begin{figure}
-    \centering
-    \includegraphics[width=0.65\textwidth]{images/02-kba-corpus}
-    \caption{TREC知識庫加速競賽資料量}
-    \label{i:kba-corps}
-\end{figure}
+%t:kba-corps
+\input{tables/kba-dataset}
 
 \cite{kba-hltoce}是2012年效能最好的團隊，
 以具名實體、單字詞（Unigram）作為特徵訓練SVM分類器，
@@ -55,13 +51,13 @@ CCR任務主要專注在尋找文章中是否有出現目標實體（Mentions/Ze
 把尋找實體的問題作為主題分類（Topic Classification）問題來處理。
 
 \cite{kba-msra}則是2013年效能最好的團隊。
-以查詢擴展（Query Expansion）、分類與學習式排序法（Learning to rank）。
+以查詢擴展（Query Expansion）、分類、與學習式排序法（Learning to rank）研究這個問題。
 其中分類是使用以文件特徵、實體特徵、文件與實體特徵、
-時間特徵與引用特徵訓練隨機森林（Random Forest）分類器。
+時間特徵、與引用特徵訓練隨機森林（Random Forest）分類器。
 
 此外，\cite{kba-entity-detection}也專注於尋找串流中的實體，
 提出了當出現新的實體時不需要新的訓練資料集的方法。
-使用了文件中心特徵、實體資料特徵與時間特徵訓練隨機森林分類器，
+使用了文件中心特徵、實體資料特徵、與時間特徵訓練隨機森林分類器，
 以尋找串流中與實體高度相關的文件。
 並且以TREC KBA 2012的資料做測試，
 效能比\cite{kba-hltoce}還要好。
@@ -87,7 +83,7 @@ CCR任務主要專注在尋找文章中是否有出現目標實體（Mentions/Ze
 定義$ICF(word) = log \frac{|R|}{n(word)}$，其中$|R|$是候選實體的數量，
 $n(word)$是字在候選實體中出現的次數。
 將DBpedia的實體以向量空間模型建模，以$TF*ICF$計算字的權重，
-將文句與候選的實體向量空間模型計算相似度，取最相似的作為真正的結果。
+將文句與候選的實體向量空間模型計算相似度，取最相似的作為結果。
 
 % 這個有點複雜呀Orz...
 % \cite{freebase-google} 則是Google則利用Freebase對實體消歧義。
@@ -112,7 +108,7 @@ $n(word)$是字在候選實體中出現的次數。
 而不限於人工標定的關係。
 過去的開放式資訊擷取系統會有非相干擷取（Incoherent Extraction）或無資訊擷取（Uninformative Extraction）的問題，
 透過句法限制（Syntactic Constraint），
-制定由詞性標記所組成的正則表示式，例如圖\ref{i:reverb-pos}，
+制定由詞性標記所組成的正則表示式，例如圖\ref{i:reverb-pos} ，
 定義關係可以出現的形式，避免非相干擷取的問題。
 詞彙限制（Lexical Constraint）認為一個合法的關係應該在大型的語料庫之中會有許多不重複的參數（Argument）。
 由大型語料庫中擷取出的關係中，不重複參數配對的數量超過一個定值才會被認為是合法的關係，
@@ -122,6 +118,7 @@ $n(word)$是字在候選實體中出現的次數。
     \centering
     \includegraphics[width=0.45\textwidth]{images/02-reverb-pos}
     \caption{詞性標記組成的正則表示式}
+    資料來源：\cite{reverb}
     \label{i:reverb-pos}
 \end{figure}
 
@@ -162,17 +159,17 @@ PATTY擷取樣式的方式是自Wikipedia、New York Times抽取句子，
 得到的分數就是心信值，代表一個樣式的品質。
 
 除了同義樣式集之外，PATTY還做了關係釋義（Relation Paraphrasing）：
-給定一個來自知識庫的關係，判斷一個樣式是否可以描述此一關係。圖\ref{i:patty-online}為其成果，如YAGO的「wasBornIn」關係可以用「[[con]] grew up」、「was bron [[con]] grew up」等樣式來描述。
+給定一個來自知識庫的關係，判斷一個樣式是否可以描述此一關係。圖\ref{i:patty-online} 為其成果，如YAGO的「wasBornIn」關係可以用「[[con]] grew up」、「was bron [[con]] lives in」等樣式來描述。
 PATTY內有127,811個樣式可以描述225種DBpedia關係，43,124個樣式可以描述25種YAGO關係。
 其透過隨機選取1,000組釋義來評估，平均的精確度（Precision）是0.76$\pm$0.03。
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.75\textwidth]{images/02-patty-online}
+    \includegraphics[width=0.9\textwidth]{images/02-patty-online}
     \caption{PATTY Online Relations}
     \label{i:patty-online}
 \end{figure}
 
-本研究欲使用樣式來尋找關係、實體特性，
+本研究擬使用樣式來尋找關係、實體特性，
 PATTY正好提供了所需要的樣式，以及樣式可以描述哪些關係等資料。
 
