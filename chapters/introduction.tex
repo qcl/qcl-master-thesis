@@ -7,20 +7,20 @@
 \chapter{緒論}
 \label{c:intro}
 
-近年來，隨著網際網路的快速發展，網際網路中開始出現越來越多彙整人類知識的網站與資源，
+近年來，隨著網際網路的快速發展，網際網路上開始出現越來越多彙整人類知識的網站與資源，
 例如Wikipedia\footnote{http://www.wikipedia.org/}，目前已經有超過280種語言，其中光是英語的條目就超過4,500,000條，
-是透過來自世界各地的志願編輯者一字一句的貢獻建立而成的。
+是透過來自世界各地的志願編輯者一字一句的貢獻建立而成。
 
 除了讓世界各地的人們可以在網際網路上共享知識之外，電腦也得以利用人類的知識，
 輔助、改善、甚至自動化進行多面向的人工智慧應用，例如資料探勘、知識擷取、自動問答系統等。
 
-為了達成這些目標，使電腦可以看懂人類的知識，於是，
-便出現了各式各樣透過擷取網路上的知識資源，產生的結構化知識資料庫，甚至進一步彼此相互鏈結。
-如圖\ref{i:lod}所示，目前已有不少的結構化知識資料庫公開。
+為了達成這些目標，使電腦可以看懂人類的知識，
+於是出現了各式各樣透過擷取網路上的知識資源，產生的結構化知識資料庫，甚至進一步彼此相互鏈結。
+如圖\ref{i:lod} 所示，目前已有不少的結構化知識資料庫公開。
 
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/01-lod-datasets}
+    \includegraphics[width=0.8\textwidth]{images/01-lod-datasets}
     \caption{結構化知識資料庫之間的鏈結}
     \label{i:lod}
     資料來源：linkeddata.org（2011）
@@ -44,15 +44,15 @@ Wikipedia就是一個知識庫。
 Wikipedia用文章（條目）的形式儲存了人物、組織、公司、城市、事件等實體，
 文章透過超連結（Hyperlinks）互相鏈結，包含超連結的句子描述了實體與實體間的關係。
 除此之外，還有的條目會包含資訊框（Infoboxes），以半結構化的形式描述了實體的特性，
-圖\ref{i:wiki}就是一個Wikipedia條目的例子。
+圖\ref{i:wiki} 就是一個Wikipedia條目的例子。
 圖中的句子「... who was the co-founder, chairman, and CEO of \emph{Apple Inc}.」，
 說明了Steven Jobs與Apple公司之間的關係：Jobs是Apple公司的CEO。
 而這個關係對Jobs這個實體來說，代表其具有「was CEO of」的特性。
 也就是說，與其他實體間的關係帶有實體特性的資訊。
 
-\begin{figure}
+\begin{figure}[h]
     \centering
-    \includegraphics[width=0.7\textwidth]{images/01-wiki-as-kb}
+    \includegraphics[width=0.8\textwidth]{images/01-wiki-as-kb}
     \caption{Wikipedia條目與資訊框}
     \label{i:wiki}
 \end{figure}
@@ -60,7 +60,7 @@ Wikipedia用文章（條目）的形式儲存了人物、組織、公司、城�
 除了Wikipedia之外，還有DBpedia\footnote{http://dbpedia.org/} \citep{dbpedia}、
 YAGO\footnote{http://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/yago//} \citep{yago}、
 Freebase\footnote{https://www.freebase.com/} \citep{freebase}等規模大小不一、不同應用的知識庫。
-其中YAGO、DBpedia是透過自動化的方法擷取Wikipedia的內容，Freebase仰賴社群更新，
+其中YAGO、DBpedia是透過自動化的方法擷取Wikipedia的內容，Freebase則是仰賴社群更新，
 這些知識庫都直接或間接仰賴志願者將新知識加入。
 
 %
@@ -68,27 +68,28 @@ Freebase\footnote{https://www.freebase.com/} \citep{freebase}等規模大小不�
 %
 \section{研究動機}
 知識庫內所記載的知識直接或間接仰賴志願編輯者的維護與更新，
-但這些人數比起資料庫中所需要維護的實體顯然非常的少。
+但這些人數比起資料庫中所需要維護的實體顯然少非常多。
 這意味著知識庫的更新總是落後於新知識——無論是過去從來不知道的知識或是舊有知識內容的更動——的產生，
 當新知識產生一段時日之後，知識庫的維護者才會更新知識庫。
 \cite{kba2012}追蹤了約60,000個被Wikipedia引用的來源網頁，
 計算從該網頁產生的時間與被Wikipedia引用的時間差，
-如圖\ref{i:wikicitenews}所示，中位數約為一年，呈現了這種落後。
+如圖\ref{i:wikicitenews} 所示，中位數約為一年，呈現了這種落後。
 因此，如何讓人工編輯的速度可以跟上新知識出現的速度便成為一個重要的課題。
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \includegraphics[width=0.65\textwidth]{images/01-wiki-cite-delay}
     \caption{Wikipedia引用延遲}
+    資料來源：\cite{kba2012}
     \label{i:wikicitenews}
 \end{figure}
 
-為了縮短這個差距，自2012年起至今的每年美國NIST\footnote{National Institue of Standards and Technology}的TREC\footnote{Text Retriveal Conference}都會舉辦知識庫加速（Knowledge Base Acceleration, KBA）競賽，
+為了縮短這個差距，自2012年起美國NIST\footnote{National Institue of Standards and Technology}的TREC\footnote{Text Retriveal Conference}開始舉辦知識庫加速（Knowledge Base Acceleration, KBA）競賽，
 提供了一個從由新聞、部落格、論壇等內容所組成、依時間所排列的龐大內容串流\footnote{2012年包含了4,973個小時，2013年包含了11,948小時。\citep{kba2013}每小時包含約100,000份文件。}（Content Strean），模擬真實世界中資訊的產生。
-希望參賽者可以建立一個系統，這樣的內容串流中，
+希望參賽者可以建立一個系統，由給定的內容串流，
 對有興趣的實體\footnote{2012年有27個人物、2個組織，2013年有98個人物，12個組織與24個設施。}，
 包含了人物、組織或建築，進行過濾，
-推薦文件給知識庫的編輯者，建議編輯者這份文件可能含有新的知識可供更新知識庫。
+推薦文件給知識庫的編輯者，提示這份文件可能含有新的知識可供更新知識庫。
 
 要從可能包含新知識的內容串流中，過濾出可能可以協助更新知識庫的文件，
 則需要知道文章中是否包含了我們關注的實體以及知識。
@@ -118,7 +119,7 @@ Freebase\footnote{https://www.freebase.com/} \citep{freebase}等規模大小不�
 樣式的覆蓋度（Coverage）、樣式值得信賴的程度（Reliability）、
 樣式－關係對映的歧義問題（Ambiguity）等因素影響。
 
-透過這個系統，我們將知道經過過濾的文件到底是完全沒有提及我們感興趣的實體特性，
+透過這個系統，我們可以知道經過處理的文件到底是完全沒有提及我們感興趣的實體特性，
 還是提到一個，甚至多個實體特性。
 有這樣的資訊就可以進行更進一步的分析，
 例如這個特性是屬於哪個實體的？這個特性的內容是什麼？
@@ -132,6 +133,6 @@ Freebase\footnote{https://www.freebase.com/} \citep{freebase}等規模大小不�
 本論文共分成五個章節。
 第一章是緒論，簡介本研究的背景、動機與目標。
 第二章是相關研究與文獻，列舉與知識庫相關的研究與資源，以及關係與樣式相關的研究。
-第三章是研究方法，提出如何於內容串流中究偵測實體特性的方法與步驟。
+第三章是研究方法，提出如何由內容串流中偵測實體特性的方法與步驟。
 第四章是實驗結果與分析，說明實驗資料集、評估方式與結果分析。
 第五章是結論與未來展望，總結研究成果。
