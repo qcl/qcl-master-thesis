@@ -3,7 +3,7 @@
         \scriptsize
         \begin{tabular}{|l||c|c|c||c|c|c|}
         \hline
-        \multirow{2}{*}{Property} & \multicolumn{3}{ c|| }{歧義度1} & \multicolumn{3}{ c| }{歧義度5無篩選} \\
+        \multirow{2}{*}{Property} & \multicolumn{3}{ c|| }{無歧義} & \multicolumn{3}{ c| }{歧義度$\leq$5} \\
         \cline{2-7}
         & Precision & Recall & $F_1$ Score & Precision & Recall & $F_1$ Score \\ 
         \hline
@@ -36,7 +36,7 @@
         Micro Average & 0.2257 & 0.4356 & 0.2973 & 0.1255 & 0.5603 & 0.2051 \\
         \hline
         \end{tabular}
-        \caption{僅使用無歧義的樣式與歧義度5篩選之實驗結果}
+        \caption{使用無歧義之樣式與歧義度$\leq$5之樣式實驗結果}
         \label{t:baseline-1}
     \end{center}
 \end{table}
