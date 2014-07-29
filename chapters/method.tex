@@ -26,7 +26,7 @@
 
 圖\ref{i:process-v1} 中，首先要先有一份實體特性與樣式的關聯表，
 知道每個實體特徵可以由哪些樣式來表達。
-以上述例子來說，就會有一張表如表\ref{t:ex-ptn-table} 有「出生地」這項實體，
+以上述例子來說，就會有一張表如表\ref{t:ext} 有「出生地」這項實體，
 並列出所有可以用來描述這項實體特性的樣式如「was born in 」、「[[adj]] childhood in」、「were lived in」等；
 表上也會有其他的實體特性如「生活地」，並列出樣式如「were lived in」、「been working in」等可以描述這項實體特性。
 
@@ -37,16 +37,16 @@
         \hline
         Property & Patterns \\
         \hline
-        \multirow{3}{*}{出生地} & was bron in \\
-         & [[adj]] childhood in \\
-         & were lived in \\
+        \multirow{3}{*}{出生地} & was bron in, \\
+         & [[adj]] childhood in, \\
+         & were lived in\\
         \hline
-        \multirow{2}{*}{生活地} & were lived in \\
-         & been working in \\
+        \multirow{2}{*}{生活地} & were lived in, \\
+         & been working in\\
         \hline
     \end{tabular}
     \caption{實體特性與樣式範例關聯表}
-    \label{t:ex-ptn-table}
+    \label{t:ext}
 \end{table}
 
 再利用這份關係表，對文章中的句子進行比對，檢查關係表中的樣式是否出現。
@@ -59,7 +59,7 @@
 
 \begin{figure}
     \centering
-    \includegraphics[width=1\textwidth]{images/03-process-v1}
+    \includegraphics[width=0.9\textwidth]{images/03-process-v1}
     \caption{以樣式偵測特性流程概念}
     \label{i:process-v1}
 \end{figure}
@@ -70,8 +70,6 @@
 YAGO關係的領域與範圍（表\ref{t:yago-relation}），
 以及可以用來描述這個關係的樣式。
 
-% FIXME 2014.07.28
-
 %t:yago-relation
 \input{tables/yagoRela}
 
@@ -81,50 +79,52 @@ YAGO關係的領域與範圍（表\ref{t:yago-relation}），
 
 樣式覆蓋度問題是指對於某個實體的特性，
 在關係表內屬於這個實體特性的樣式佔所有可以表達該特性的樣式之比例。
-例如一個實體特性可以用100種樣式來描述，
-但只找出了其中70種，
-這樣就沒有辦法找到以其他30種樣式來描述該特性的句子。
+以表\ref{t:ext} 為例，其中「生活地」這項實體特性表中列了2個樣式，
+但實際上有更多的樣式可以表達這個概念，例如「been lived at」就沒有列在表中，
+這樣有此樣式的句子就沒辦法被偵測為含有實體特性的句子。
 
 樣式的品質則是一個字串到底能不能夠作為一個樣式，    %FIXME
 一個樣式的品質不高，那麼這樣的樣式有可能太廣泛的出現在句子之中，
 致使這樣的樣式沒有辦法區辨出實體屬性。
-例如PATTY關係釋義中的DBpedia:manager內的樣式「hired」就只有這一個單字，
+例如PATTY關係釋義中的YAGO:actedIn內的樣式「links」就只有這一個單字，
 用以描述實體特性顯得太廣泛了些，
 以此擷取回的文章有包含實體特性的比例就較低。
 
 樣式可信賴度則是一個樣式到底能不能用來表達實體特性。
-例如，對於特性YAGO:diedIn，以「since worked in」來描述完全文不對題。
+例如，對於特性YAGO:diedIn，以「since worked in」來描述完全文不對題，
+又如YAGO:wasBornIn中的樣式「also opened in」也無法描述特性。
 
 而為了處理樣式的品質、可信賴度問題，
-應該要在圖\ref{i:process-v1}流程中的關聯表與樣式比對中增加一個樣式篩選的步驟，
+應該要在圖\ref{i:process-v1} 流程中的關聯表與樣式比對中增加一個樣式篩選的步驟，
 篩選出可信賴、有一定品質的樣式來進行樣式比對，
-此部份將於第\ref{s:select-pattern}小節說明詳細內容。
+此部份將於第\ref{s:select-pattern} 小節說明詳細內容。
 
 經過樣式比對後，每篇文章可能存在數個樣式，
 如果在關聯表中每個樣式只對映到一個關係，
 那便沒有歧義。
 但一個樣式可能存在於多個實體特性的關聯表內，
 例如樣式「first met with」就被PATTY認為可以表示5種特性（hasAcademicAdvisor、isKnownFor、isMarriedTo、influences、hasChild）。
-因此在樣式被比對出來之後，整個偵測流程中還需要一個消歧義的步驟。
-這個部份將在第\ref{s:pattern-disambiguity}節中說明。
+因此在樣式被比對出來之後，整個偵測流程中還需要一個消歧義的步驟，
+決定當此樣式出現時，到底是5種特性中的哪一種？哪幾種？或者都沒有？
+這個部份將在第\ref{s:pattern-disambiguity} 節中說明。
 
 補上了樣式篩選與消歧義後的流程圖應修正為圖\ref{i:process-v2}。
-樣式比對使用的樣式是經過篩選的，
-比對出來後還要進行消歧義才完成偵測實體特性之流程。
+樣式比對使用經過篩選的樣式，
+比對出來後進行消歧義才完成偵測實體特性之流程。
 由於偵測實體特性的流程對於每一分文件都是相同，且彼此互相獨立，
-因此可以平行處理文件，如圖\ref{i:process-parallel}所示，
+因此可以平行處理文件，如圖\ref{i:process-parallel} 所示，
 處理內容串流的大量文件。
 
 \begin{figure}
     \centering
-    \includegraphics[width=1\textwidth]{images/03-process-v2}
+    \includegraphics[width=0.9\textwidth]{images/03-process-v2}
     \caption{以樣式偵測特性流程}
     \label{i:process-v2}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=1\textwidth]{images/03-pattern-parallel}
+    \includegraphics[width=0.9\textwidth]{images/03-pattern-parallel}
     \caption{平行處理架構}
     \label{i:process-parallel}
 \end{figure}
@@ -142,9 +142,9 @@ PATTY中提供的25個YAGO關係有43,124個樣式，
 我們將所有的樣式建立成一顆前綴樹（Prefix Tree）。
 先將所有首字相同的樣式合併成同一個節點，
 再看第二個字是否相同，如果不同就分支出去，
-以此類推，最後再連結到樣式編號，
+依此類推，最後再連結到樣式編號，
 即可透過編號查詢該樣式可能表示的實體特性。
-如圖\ref{i:pattern-prefix-tree}所示，
+如圖\ref{i:pattern-prefix-tree} 所示，
 四個樣式「was born」、「was born at」、「was born [[det]] village」和「was bron [[det]] willage in」的首字皆為was，所以併成一個節點。
 第二個字也都相同，所以也併成一個節點。
 而此時「was born」已經完成了，所以born節點下新增一個樣式編號的節點。
@@ -162,9 +162,9 @@ PATTY中提供的25個YAGO關係有43,124個樣式，
 
 有了樣式前綴樹後，
 再來就是利用這棵樹來比對句子中是否有出現其中的樣式。
-演算法\ref{a:pattern-match}描述了比對的過程。
+演算法\ref{a:pattern-match} 描述了比對的過程。
 
-演算法\ref{a:pattern-match}的輸入是擬比對的文章A以及已經預先建立完成的樣式前綴樹T，
+演算法\ref{a:pattern-match} 的輸入是擬比對的文章A以及已經預先建立完成的樣式前綴樹T，
 輸出是文章A所出現過的樣式及其出現的位置。
 對於文章A中的每個句子S，由於樣式包含詞性標記，
 因此需要將S標記，實驗中使用的是Textblob的APTagger\footnote{https://github.com/sloria/textblob-aptagger}來進行快速的詞性標記。
@@ -217,32 +217,48 @@ PATTY中提供的25個YAGO關係有43,124個樣式，
     \end{algorithmic}
 \end{algorithm}
 
-演算法\ref{a:pattern-match}中同時於暫存紀錄中的可能樣式最多只會跟樣式前綴樹的深度相同，
+演算法\ref{a:pattern-match} 中同時於暫存紀錄中的可能樣式最多只會跟樣式前綴樹的深度相同，
 若文章的長度是n個字、每個字對多可能檢查暫存同前綴樹深度m次，
-則演算法\ref{a:pattern-match}的時間複雜度是O(mn)。
+則演算法\ref{a:pattern-match} 的時間複雜度是O(mn)。
 
 \section{樣式篩選}
 \label{s:select-pattern}
-樣式篩選是希望在建立樣式前綴樹給樣式比對使用前，
+樣式篩選是希望在建立樣式前綴樹提供樣式比對使用前，
 先對樣式進行一些篩選，以解決樣式品質、可信賴度甚至是歧義問題。
 針對這三個問題，主要有三種篩選的方法。
 
 首先是關於樣式的品質，
 由於PATTY對每個樣式有計算一個信心值，
-這裡主要是針對這個信心值進行篩選，
-在樣式比對時不使用信心值太低的樣式。
+例如YAGO:actedIn中的樣式「links」的信心值是0.143，
+而「starred in [[det]] film」的信心值是0.937，
+後者相較於前者更適合作為樣式來進行特性偵測。
+這裡主要是針對信心值進行篩選，
+設定信心值門檻，不使用信心值低於門檻值的樣式進行樣式比對。
 
 再來是可信賴度的部份，
-經過統計過去文件中的出現頻率與其出現的文件中確實具有實體特性的比例，
-可以得知在過去文件中這個樣式值不值得信賴，
-樣式出現次數中確實具有實體特性的比例越高代表這個樣式越值得信賴，
-反之則不值得信賴。
-藉由這個比例可以用來篩選樣式。
+由於我們認為可信賴度是用來是樣式能不能表達特性的程度，
+因此定義了計算可性度為一個樣式出現的次數中，
+其出現的文件確實具有實體特性的比例。
+例如，「was born」曾出現在22,543份文件之中，
+其中有12,038份文件確實有「出生地」這項特性，
+因此樣式「was bron」對「出生地」這項特性的可信賴度是0.534。
+而「school in」曾出現在1,486份文件中，
+其中有387份文件有「出生地」這項特性，其可信賴度為0.26，
+相較於「was bron」來的低。
+可信賴度越高代表這個樣式出現時有越高的可能可以代表存在實體特性，
+反之可信賴度較低的樣式則可能根本無法掉表實體特性。
+藉由可信賴度，我們可以篩選出較值得信賴的樣式進行比對。
 
 最後是歧義的問題，有部份的樣式可能同時表示多種實體特性，
-其中有些甚至可以對映到6、7種特性以上，例如樣式「worked from」甚至高達17種，
-如表\ref{t:yago-degree}即顯示了各信心值下各種歧義度的樣式統計，
-在樣式篩選時，會將歧義度太大的樣式捨去。
+以表\ref{t:ext} 的例子來說，「were lived in」同時可能表示「出生地」與「生活地」兩種實體特性，這樣的樣式我們就稱其歧義度為2，代表此樣式可以表達兩種實體特性。
+表\ref{t:yago-degree} 即顯示了各信心值下各種歧義度的樣式統計，
+約有40\%的樣式具有歧義，其中樣式「worked from」的歧義度甚至高達17（livesIn、
+hasAcademicAdvisor、diedIn、isLeaderOf、isKnownFor、isMarriedTo、created、
+influences、isLocatedIn、wasBornIn、worksAt、graduatedFrom、actedIn、produced、
+directed、isCitizenOf、isPoliticianOf）。
+歧義度大的樣式也可以視為沒辦法精確的表達特性，
+在樣式篩選時，會將歧義度太大的樣式捨去，
+避免過度混淆而影響了系統的效能。
 
 %t:yago-degree
 \input{tables/yagoDegree}
@@ -252,37 +268,90 @@ PATTY中提供的25個YAGO關係有43,124個樣式，
 
 經過樣式篩選、比對之後，
 文章中出現的樣式可以代表的特性仍可能具有歧義，
-表\ref{t:yago-overlap}就呈現了各種特性之間所屬的樣式重疊的狀況。
-本研究使用了以下幾種方法嘗試消除歧義。
+表\ref{t:yago-overlap} 就呈現了各種特性之間所屬的樣式重疊的狀況。
+表中的數字代表樣式重疊的比例，沒有數字代表兩組樣式無重疊。
+例如表中第一排第二欄的值是0.33，
+代表可以用來表達actedIn的樣式之中有33\%也可以用來表達created這個特性。
+表中可以看到像是diedIn、livesIn、wasBornIn互有重疊，
+或是像happendIn、hasCapital、participatedIn幾乎完全不與其他特性混淆。
+針對歧義問題，本研究使用了以下幾種方法嘗試消歧義。
 
 %t:yago-overlap
 \input{tables/yagoOverlap}
 
-由於PATTY的實體特性如表\ref{t:yago-relation}有每個特性的領域（Domain）與範圍（Range），
+首先是使用實體的類型資訊。
+由於PATTY的實體特性如表\ref{t:yago-relation} 有每個特性的領域（Domain）與範圍（Range），
 如果可以知道被描述的實體的類型為何，就可以依據特性的領域來進行判斷。
 例如特性actedIn的領域是演員（wordnet\_actor），
-如果經過樣式比對之後有一個actedIn的樣式存在文章之中，
-但其實被描寫的對象並不是演員，那麼特性actedIn就不應該存在這篇文章之中。
+經過樣式比對之後有一個actedIn的樣式存在文章之中，
+如樣式「appeared in」存在Wikipedia的Jahsha Bluntt條目中，
+但Jahsha是籃球員（wordnet\_basketball\_player）而非演員，
+如果沒有Jahsha的類型資訊，系統就會判定這篇文章存在特性actedIn，
+但透過類型資訊，知道Jahsha不是演員，
+就可以判斷特性actedIn不應該存在這篇文章之中。
 
-因為可能一篇文章同時存在數種實體特性，
-而這數種實體特性可能是因為出現了同一個樣式而被認定存在，
-但此一樣式可能同時指涉更多種的實體特性，造成混淆。
-因此在針對一個存在於文章之中的樣式，選擇可能的實體特性時，
-應該是多選多而不是多選一。
+再來對於有歧義的樣式，需要有挑選特性的策略。
+當一個樣式自文章中被比對出來時，
+要判斷實體特性的結果有存在一個到數個實體特性或其實沒有實體特性等可能性，
+要選擇一個，多個或不選便是一個問題。
+對於候選的樣式，有以下幾種選擇策略：(1) 只選一個、(2) 設定一個挑選門檻、(3) 全部都選。
 
-進行多選多的操作則利用了統計過去文件中出現樣式的次數與其可以描述的所有實體特性的正確次數，
-例如樣式$P$可以描述實體特性$R_1, R_2, R_3$，
-在過去的文件中總共出現了15次，其中描述$R_1$的有10次，$R_2$有8次，$R_3$有2次。
-此時將所有特性的出現次數除以最多次的，即可得到$R_1=1.0, R_2=0.8, R_3 = 0.2$，
-再設定一個門檻值來篩選，如果門檻值設定為0.9，則看到樣式$P$出現的話，
-只認定文章中有$R_1$，若門檻值為0.7，則認定文章中存在$R_1,R_2$兩種特性。
-透過統計資料與調整門檻值可以嘗試降低歧義的影響。
+這裡可以利用第\ref{s:select-pattern} 小節中提過得樣式對特性可信賴度作為選擇的依據。
+在(1)只選一個的策略下，挑選候選特性中可信賴度最高的。
+例如樣式「have lived in」的候選特性有isLocatedIn、wasBornIn、
+isCitizenOf、livesIn、isLeaderOf，
+在「have lived in」總過95次出現中，代表isLocatedIn有52次、wasBornIn 21次、
+isCitizenOf 8次、livesIn 6次、isLeaderOf 2次，換算可信賴度分別為0.547、0.221、
+0.084、0.063、0.021。
+在策略(1)下，選擇可信賴度最高的isLocatedIn作為該樣式。
+但這樣只會固定都選一個樣式，沒有辦法因應可能有多個樣式的情形，
+因此有了策略(2)，設定一個門檻。如果門檻為0.5，那只有isLocatedIn能通過門檻。
+如果門檻值設定為0.2，那麼isLocatedIn、wasBornIn都會被當作此樣式代表的特性。
+如果設定高一點的門檻0.75，那麼這個樣式將不代表任何的特性。
+透過特性選擇的策略，可以嘗試降低歧義的影響。
 
-除了透過統計資料，
-我們也認為樣式出現的前後文對於該判定哪些實體特性存在或不存在是有影響的。
-當某個樣式用來描述特定的實體特性時可能會辦隨出現固定的字詞。
-為了能夠利用前後文的資訊進行判斷，
-我們先從過去的文件中抽取出含有樣式的句子，並依照實體特性，
-對每一個特性都建立一個二元的簡單貝氏分類器（Na\"{\i}ve Bayes Classifier）。
-對於存在樣式的句子，對樣式可以描述的各種實體特性使用分類器進行判斷是不是存在實體特性。
+最後，除了使用挑選策略之外，
+我們認為樣式出現的前後文對於該判定哪些實體特性存在或不存在是有影響的。
+當某個描述特定的實體特性的樣式出現時可能會伴隨出現一些固定的字詞。
+如果沒有那些字詞伴隨出現，有可能是與實體特性無關的句子。
+
+例如，dealsWith是國家與國家間締約的特性，
+其中樣式「divided into」若用來描述dealsWith，
+前後文就常會出現一些國家名、行政區之類的詞彙等。
+又例如holdsPoliticalPosition的樣式出現時，
+常常會接上首相、大使、市長等詞彙。
+若沒有這些詞彙伴隨的出現，常常是無關的句子。
+
+%#118 American Samoa is administratively divided into three districts—Eastern District, Western District, and Manu'a District—and two "unorganized" atolls, Swains Island and the uninhabited Rose Atoll
+%(O) 22417/divided into/{19,324}/ dealsWith 
+
+我們希望可以利用樣式出現時，句子的前後文內的字來幫助選擇特性。
+對此，
+我們先從過去的文件之中把所有含有樣式的句子取出，
+留下文件中確實含有該樣式代表的特性的句子，
+並依照樣式所代表的實體特性分類，
+例如文章A具有wasBornIn、isLocatedIn兩個實體特性，並有$S_1$與$S_2$兩個句子。
+其中的句子$S_1$包含樣式「have lived in」，可以代表isLocatedIn、wasBornIn、
+isCitizenOf、livesIn、isLeaderOf等5種特性；
+句子$S_2$包含樣式「was invaded」，可以代表participatedIn、dealsWith等2種特性。
+由於文章A並沒有「was invaded」可以代表的特性，
+因此我們將$S_2$加上負向標記，並放入participatedIn與dealsWith的分類中。
+而對$S_1$，則加上正向標記後放入wasBornIn與isLocatedIn的分類之中，
+加上負向標記後放入isCitizenOf、livesIn、isLeaderOf的分類之中。
+
+每個實體特性分類中包含了許多句子，有的句子具有正向標記，
+代表這個句子具有該實體特性；有的句子具有負向標記，
+代表這個句子不包含該實體分類。
+對於每個實體特性，我們以分類中的句子所出現過的詞作為特徵，
+正、負向標記的詞頻作為特徵值，
+訓練了一個二元的簡單貝氏分類器\footnote{訓練的過程與http://nlp.stanford.edu/IR-book/html/htmledition/naive-bayes-text-classification-1.html內的演算法一樣。}（Na\"{\i}ve Bayes Classifier），
+用來區分是正向，也就是有包含實體特性的句子，
+是負向，也就是不包含實體特性的句子。
+
+這些分類器的使用時機是當樣式被比對出來之後，
+我們知道這個樣式出現的句子以及透過樣式與特性關聯表可以查詢到候選的實體特性。
+對於每個實體特性都已經有一個分類器了，
+這讓每一個分類器對該句進行分類，
+分類結果為正向代表句子含有該分類器所屬的特性，
+反之則代表不存在該分類器所屬的實體特性。
 
