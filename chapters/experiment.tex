@@ -302,30 +302,52 @@ False Postive也隨之減少，
 而表\ref{t:nbc} 則是歧義度不小於5、使用實體類型資訊、樣式篩選門檻0.5時有無使用分類器的效能比較。
 
 圖\ref{i:nbc} 與表\ref{t:nbc} 中可以看到使用了分類器後整體的效能有了大幅度的提升，
-從個別特性來看，大多數的特性的精確度都有了大幅的提升。
-而isKnownFor、isPoliticianOf則是因為有這些特性訓練時正面的句子太少，
-以至於分類時完全沒有正向的結果。
+從個別特性來看，
+大多數的特性如created、dealsWith、diedIn、directed、graduatedFrom、
+happendIn、hasAcademicAdvisor、hasCapital、hasChild、hasWonPrize、
+holdsPoliticalPosition、influences、isCitizenOf、isMarriedTo、
+livesIn、participatedIn、playsFor、worksA等的精確度都有了大幅的提升。
+但這些精確度的增加主要並非來自True Postive的提升，
+而是False Postive的大幅下降，事實上True Postive的數量也減少了，而使得False Negative上升，因此精確率大幅提升但召回率下降。
+例如diedIn的False Postive由10,299降低至1,344，True Postive由1,276降至850，而False Negative則是由1.032升至1,458。
+由False Postive的大幅下降可以知道，
+使用了前後文資訊使得判斷變得嚴格，大大降低了誤報為Postive的數量。
+
+而isKnownFor、isPoliticianOf則是因為這些特性訓練時有正向標記的的句子太少，
+以至於分類時完全沒有正向的結果，所以精確率與召回率皆為0。
 表\ref{t:yago-instance} 也顯示這兩個特性的文件數與其他特性比起來算是比較少了些。
 
 \subsection{錯誤分析}
 
-不管是整體或個別特性偵測的效能以精確率、召回率作為評估標準，
-其中False Postive對此二指標的影響甚巨，
-因此我們分析了造成False Postive的原因。
-由於實驗是經過樣式比對、特性消歧義等步驟，
-若經過了特性消歧義仍然沒有回答出正確的特性，
-那就造成了False Postive。
+在整個過程我們分析了錯誤可能的來源，
+由於整體或個別特性偵測的效能以精確率、召回率作為評估標準，
+能夠影響這兩個指標的是True Postive、False Postive以及False Negative三者。
+True Postive是經過偵測流程後，認為存在特性且實際上存在；
+False Postive是經過偵測流程後，認為存在特性但實際上不存在；
+False Negative是經過偵測流程後，認為不存在特性但實際上存在。
 
-False Postive的成因基本上可以分成兩類。
-第一類是在候選的特性中沒有選擇出正確的特性，
-這代表選擇其他的特性就有機會答對，但這隱含了有樣式出現就一定要選擇特性。
-第二類是樣式有出現，但根本不存在特性。
+False Postive的成因基本上可以分成兩類：
+(1) 由歧義性造成、 (2) 樣式出現但不具有特性。
+(1) 是當有候選樣式時，
+有機會回答正確但沒有成功選對特性造成的錯誤。
+這是由於假設有樣式出現就一定有特性資訊，一定要進行選擇，
+但樣式雖然出現，但有可能根本就不存在特性資訊，也就是(2)。
 
-圖\ref{i:error}分析了使用分類器前後個特性的False Postive中的成分，
-圖中的黑、白線條就是使用分類器前後第二類錯誤佔所有錯誤中的比例。
-其實大多數的錯誤都是屬於第二類錯誤，
-使用了分類器後第二類在部分特性中所占的比例有略微下降，
-但然仍是最大宗的錯誤，要如何有效地克服這些錯誤是未來的研究課題之一。
+而False Negative的來源除了偵測流程中的誤判，
+例如在特性篩選策略中低於門檻值或被分類器判為不存在特性之外，
+還有一個固定的部份是來自於樣式的覆蓋率不足所致。
+表\ref{t:yago-coverage} 中，當信心值門檻為0，使用歧義度不大於5的樣式時，
+最多可以涵蓋283,830篇文章，佔測試資料集約85\%，
+這同時意味著另外約15\%的文章中的特性是目前無法偵測的。
+
+由於大部分實驗中的精確率相較於召回率偏低，
+因此我們又分析了影響精確率的False Postive的成因所佔的比例。
+圖\ref{i:error} 分析了使用分類器前後個特性的False Postive中的成分，
+發現大部分False Postive的來源皆屬於第二類。
+圖中的黑、白線條就是使用分類器前後第二類錯誤佔所有False Postive中的比例。
+使用了分類器後第二類除了部份特性如hasAcademicAdvisor之外，
+雖然所佔比例有所下降，但仍然是最主要的錯誤來源，
+要如何有效地克服這些錯誤是未來的研究課題之一。
 
 \begin{figure}[h]
     \centering
