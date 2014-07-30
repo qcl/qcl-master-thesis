@@ -341,6 +341,14 @@ isCitizenOf、livesIn、isLeaderOf等5種特性；
 因此我們將$S_2$加上負向標記，並放入participatedIn與dealsWith的分類中。
 而對$S_1$，則加上正向標記後放入wasBornIn與isLocatedIn的分類之中，
 加上負向標記後放入isCitizenOf、livesIn、isLeaderOf的分類之中。
+整個加上標記的流程如圖\ref{i:tagging} 所示。
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{images/03-tagging}
+    \caption{標記句子流程}
+    \label{i:tagging}
+\end{figure}
 
 每個實體特性分類中包含了許多句子，有的句子具有正向標記，
 代表這個句子具有該實體特性；有的句子具有負向標記，
