@@ -143,10 +143,10 @@ $n(word)$是字在候選實體中出現的次數。
 PATTY的關係是以「<Domain> Pattern <Range>」表示，
 Domain與Range是實體的類型（Types），來自知識庫YAGO、DBpedia。
 而PATTY的樣式是以單字（Words）、詞性標記（Part-Of-Speech Tags）、萬用字元（Wildcards）所組成，
-例如「<$person$>'s [adj] voice * <$song$>」中，
+例如「<$person$>'s [[adj]] voice * <$song$>」中，
 Domain是$person$，即第一個實體的類型是$person$；
 Range是$song$，即第二個實體的類型是$song$ 。
-「[adj]」是詞性標記，代表這裡可以填入任意形容詞，「voice」是單字，必須完全匹配，
+「[[adj]]」是詞性標記，代表這裡可以填入任意形容詞，「voice」是單字，必須完全匹配，
 「*」是萬用字元，可以填入任何字。
 例如「Amy Winehouse's soft voice in `Rehab'」這個句子就符合這個樣式。
 

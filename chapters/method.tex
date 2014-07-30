@@ -27,8 +27,8 @@
 圖\ref{i:process-v1} 中，首先要先有一份實體特性與樣式的關聯表，
 知道每個實體特徵可以由哪些樣式來表達。
 以上述例子來說，就會有一張表如表\ref{t:ext} 有「出生地」這項實體，
-並列出所有可以用來描述這項實體特性的樣式如「was born in 」、「[[adj]] childhood in」、「were lived in」等；
-表上也會有其他的實體特性如「生活地」，並列出樣式如「were lived in」、「been working in」等可以描述這項實體特性。
+並列出所有可以用來描述這項實體特性的樣式如「was born in 」、「[[adj]] childhood in」、「lived in」等；
+表上也會有其他的實體特性如「生活地」，並列出樣式如「lived in」、「been working in」等可以描述這項實體特性。
 
 \begin{table}
     \centering
@@ -39,9 +39,9 @@
         \hline
         \multirow{3}{*}{出生地} & was bron in, \\
          & [[adj]] childhood in, \\
-         & were lived in\\
+         & lived in\\
         \hline
-        \multirow{2}{*}{生活地} & were lived in, \\
+        \multirow{2}{*}{生活地} & lived in, \\
          & been working in\\
         \hline
     \end{tabular}
@@ -52,7 +52,7 @@
 再利用這份關係表，對文章中的句子進行比對，檢查關係表中的樣式是否出現。
 若有出現，則這篇文章可能包含樣式對映的實體特性。
 例如句子「Jobs was born in San Francisco」包含了「was bron in」，
-但不包含「were lived in」等其他樣式。
+但不包含「lived in」等其他樣式。
 透過樣式「was born in」可以從關聯表中查到此樣式屬於特性「出生地」，
 因此推論這個句子包含了「出生地」這項實體特性資訊。
 樣式比對的細節會在第\ref{s:pattern-match} 節中詳述。
@@ -250,7 +250,7 @@ PATTY中提供的25個YAGO關係有43,124個樣式，
 藉由可信賴度，我們可以篩選出較值得信賴的樣式進行比對。
 
 最後是歧義的問題，有部份的樣式可能同時表示多種實體特性，
-以表\ref{t:ext} 的例子來說，「were lived in」同時可能表示「出生地」與「生活地」兩種實體特性，這樣的樣式我們就稱其歧義度為2，代表此樣式可以表達兩種實體特性。
+以表\ref{t:ext} 的例子來說，「lived in」同時可能表示「出生地」與「生活地」兩種實體特性，這樣的樣式我們就稱其歧義度為2，代表此樣式可以表達兩種實體特性。
 表\ref{t:yago-degree} 即顯示了各信心值下各種歧義度的樣式統計，
 約有40\%的樣式具有歧義，其中樣式「worked from」的歧義度甚至高達17（livesIn、
 hasAcademicAdvisor、diedIn、isLeaderOf、isKnownFor、isMarriedTo、created、
@@ -269,7 +269,8 @@ directed、isCitizenOf、isPoliticianOf）。
 經過樣式篩選、比對之後，
 文章中出現的樣式可以代表的特性仍可能具有歧義，
 表\ref{t:yago-overlap} 就呈現了各種特性之間所屬的樣式重疊的狀況。
-表中的數字代表樣式重疊的比例，沒有數字代表兩組樣式無重疊。
+表中的數字代表樣式重疊的比例，沒有數字代表兩組樣式無重疊或者重疊的比例甚低。
+第i排第j欄的數字是$\frac{|property\ i's\ patterns \cap property\ j's\ pattrn|}{|property\ i's\ patterns|}$。
 例如表中第一排第二欄的值是0.33，
 代表可以用來表達actedIn的樣式之中有33\%也可以用來表達created這個特性。
 表中可以看到像是diedIn、livesIn、wasBornIn互有重疊，
