@@ -26,7 +26,7 @@
 
 圖\ref{i:process-v1} 中，首先要先有一份實體特性與樣式的關聯表，
 知道每個實體特徵可以由哪些樣式來表達。
-以上述例子來說，就會有一張表如表\ref{t:ext} 有「出生地」這項實體，
+以上述例子來說，就會有一張表如表\ref{t:ext} 列有「出生地」這項實體特性，
 並列出所有可以用來描述這項實體特性的樣式如「was born in 」、「[[adj]] childhood in」、「lived in」等；
 表上也會有其他的實體特性如「生活地」，並列出樣式如「lived in」、「been working in」等可以描述這項實體特性。
 
@@ -50,11 +50,11 @@
     \end{center}
 \end{table}
 
-再利用這份關係表，對文章中的句子進行比對，檢查關係表中的樣式是否出現。
+利用這份關係表，對文章中的句子進行比對，檢查關係表中的樣式是否出現。
 若有出現，則這篇文章可能包含樣式對映的實體特性。
 例如句子「Jobs was born in San Francisco」包含了「was bron in」，
 但不包含「lived in」等其他樣式。
-透過樣式「was born in」可以從關聯表中查到此樣式屬於特性「出生地」，
+透過樣式「was born in」可以從關聯表中查到此樣式屬於實體特性「出生地」，
 因此推論這個句子包含了「出生地」這項實體特性資訊。
 樣式比對的細節會在第\ref{s:pattern-match} 節中詳述。
 
@@ -66,7 +66,7 @@
 \end{figure}
 
 本研究擬利用PATTY已經提供的關係釋義表，
-作為偵測流程中所需要的實體特性與樣式關聯表
+作為偵測流程中所需要的實體特性與樣式關聯表。
 表中包含了知識庫YAGO內定義的實體間關係、
 YAGO關係的領域與範圍（表\ref{t:yago-relation}），
 以及可以用來描述這個關係的樣式。
@@ -84,7 +84,7 @@ YAGO關係的領域與範圍（表\ref{t:yago-relation}），
 但實際上有更多的樣式可以表達這個概念，例如「been lived at」就沒有列在表中，
 這樣有此樣式的句子就沒辦法被偵測為含有實體特性的句子。
 
-樣式的品質則是一個字串到底能不能夠作為一個樣式，    %FIXME
+樣式的品質則是一個字串到底能不能夠作為一個樣式，   
 一個樣式的品質不高，那麼這樣的樣式有可能太廣泛的出現在句子之中，
 致使這樣的樣式沒有辦法區辨出實體屬性。
 例如PATTY關係釋義中的YAGO:actedIn內的樣式「links」就只有這一個單字，
@@ -298,21 +298,20 @@ directed、isCitizenOf、isPoliticianOf）。
 要選擇一個，多個或不選便是一個問題。
 對於候選的樣式，有以下幾種選擇策略：(1) 只選一個、(2) 設定一個挑選門檻、(3) 全部都選。
 
-這裡可以利用第\ref{s:select-pattern} 小節中提過得樣式對特性可信賴度作為選擇的依據。
-在(1)只選一個的策略下，挑選候選特性中可信賴度最高的。
+這裡可以利用第\ref{s:select-pattern} 小節中提過的樣式對特性可信賴度作為選擇的依據。
+在(1)只選一個的策略下，挑選候選特性中可信賴度最高的特性。
 例如樣式「have lived in」的候選特性有isLocatedIn、wasBornIn、
 isCitizenOf、livesIn、isLeaderOf，
-在「have lived in」總過95次出現中，代表isLocatedIn有52次、wasBornIn 21次、
-isCitizenOf 8次、livesIn 6次、isLeaderOf 2次，換算可信賴度分別為0.547、0.221、
+在「have lived in」總共95次出現中，代表isLocatedIn有52次、wasBornIn有21次、
+isCitizenOf有8次、livesIn有6次、isLeaderOf有2次，換算可信賴度分別為0.547、0.221、
 0.084、0.063、0.021。
-在策略(1)下，選擇可信賴度最高的isLocatedIn作為該樣式。
-但這樣只會固定都選一個樣式，沒有辦法因應可能有多個樣式的情形，
+在策略(1)下，選擇可信賴度最高的isLocatedIn作為該樣式所代表的特性。
+但這樣只會固定都選一個特性，沒有辦法因應可能有多個特性的情形，
 因此有了策略(2)，對可信賴度進行正規化，設定一個門檻以篩選之。
-正規化是將所有可信賴度除以可信賴度中最大的值，
+正規化是將所有候選特性可信賴度除以可信賴度中最大的值，
 經過正規化的可信賴度分別是1、0.404、0.154、0.115、0.038。
 如果門檻為0.5，那只有isLocatedIn能通過門檻。
 如果門檻值設定為0.2，那麼isLocatedIn、wasBornIn都會被當作此樣式代表的特性。
-如果設定高一點的門檻0.75，那麼只有isLocatedIn能通過門檻。
 透過特性選擇的策略，可以嘗試降低歧義的影響。
 
 最後，除了使用挑選策略之外，
@@ -326,9 +325,6 @@ isCitizenOf 8次、livesIn 6次、isLeaderOf 2次，換算可信賴度分別為0
 又例如holdsPoliticalPosition的樣式出現時，
 常常會接上首相、大使、市長等詞彙。
 若沒有這些詞彙伴隨的出現，常常是無關的句子。
-
-%#118 American Samoa is administratively divided into three districts—Eastern District, Western District, and Manu'a District—and two "unorganized" atolls, Swains Island and the uninhabited Rose Atoll
-%(O) 22417/divided into/{19,324}/ dealsWith 
 
 我們希望可以利用樣式出現時，句子的前後文內的字來幫助選擇特性。
 對此，
