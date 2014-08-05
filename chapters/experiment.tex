@@ -212,9 +212,43 @@ $F_1$分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1
     \label{i:degree}
 \end{figure}
 
+\subsubsection{綜合討論}
 經過了對信心值、可信賴度與歧義度的實驗，
-可以知道透過篩選信心值與可信賴度可以提升精確率，
-而使用歧義度高的樣式時可以提升召回率。
+可以知道透過篩選信心值與可信賴度可以提升精確率，但同時會對召回率造成影響，
+而使用歧義度高的樣式時可以提升召回率，但也同時因為歧義問題造成精確率的下降。
+
+綜合了信心值、可信賴度、歧義度三項因素，
+整體效能表現排序如表\ref{t:ptn-select-overall}，
+前5名中的可信賴度門檻0.3，前4名皆為信心值門檻0，歧義度依次遞減。
+雖然單獨觀察歧義度時，使用歧義度越大的樣式不利於整體效能表現，
+但有利於召回率。
+配合可信賴度篩選，可以減緩隨著歧義度增加而下降的精確率的下降幅度，
+使得整體效能的表現有所提升。
+
+雖然可信賴度門檻在0.3時的整體表現比起門檻值為0來的好，
+但如同表\ref{t:reliability} 所示，門檻值為0.3時，
+hasCapital、holdsPoliticalPosition、isKnownFor、isLeaderOf等特性已經無樣式可用，
+因此無法偵測這些特性。由於會造成部份特性無法偵測，
+後續的實驗中將可信賴度門檻固定於0。
+
+\begin{table}[h]
+    \caption{樣式篩選整體效能表現（宏觀平均）}
+    \label{t:ptn-select-overall}
+    \footnotesize
+    \begin{center}
+        \begin{tabular}{|l||c|c|c||c|c|c|}
+            \hline
+            排名 & 信心值門檻 & 可信賴度門檻 & 歧義度 & Precision & Recall & $F_1$ Score \\
+            \hline
+            1 & 0 & 0.3 & $\leq$5 & 0.2916 & 0.2754 & 0.2833 \\
+            2 & 0 & 0.3 & $\leq$4 & 0.2962 & 0.2690 & 0.2819 \\
+            3 & 0 & 0.3 & $\leq$3 & 0.2851 & 0.2593 & 0.2716 \\
+            4 & 0 & 0.3 & $\leq$2 & 0.2911 & 0.2353 & 0.2602 \\
+            5 & 0.7 & 0.3&$\leq$5 & 0.2823 & 0.2015 & 0.2351 \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
 
 \subsection{特性消歧義}
 \subsubsection{實體類型資訊}
@@ -227,7 +261,7 @@ $F_1$分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1
 加入實體類型資訊後，將不可能屬於實體的特性消除掉，在評估方面，
 便不會使召回率下降，還有機會可以提升精確率。
 
-圖\ref{i:type}便是加入實體類型資訊前後對不同歧義度的效能比較結果。
+圖\ref{i:type} 便是加入實體類型資訊前後對不同歧義度的效能比較結果。
 加入實體類型資訊後，使得精確率有大幅提升，
 例如以使用歧義度不大於2的樣式時，如表\ref{t:type} 數據所示，
 actedIn的False Postive從13,560降至489、happendIn的False Postive從1,567降至89，都有大幅度的精確率提升，
@@ -266,7 +300,7 @@ actedIn的False Postive從13,560降至489、happendIn的False Postive從1,567降
     \label{i:micro-nol}
 \end{figure}
 
-圖\ref{i:macro-nol}、\ref{i:micro-nol}呈現實驗結果，
+圖\ref{i:macro-nol}、\ref{i:micro-nol} 呈現實驗結果，
 (1)只選擇了一個忽略了可能有複數個特性存在，
 (4)全選則太寬鬆，以至於精確率降太多。
 
@@ -317,6 +351,56 @@ livesIn、participatedIn、playsFor、worksA等的精確度都有了大幅的提
 以至於分類時完全沒有正向的結果，所以精確率與召回率皆為0。
 表\ref{t:yago-instance} 也顯示這兩個特性的文件數與其他特性比起來算是比較少了些。
 
+\subsubsection{綜合討論}
+在使用簡單貝氏分類器之前，基於樣式篩選，再搭配上實體類型資訊與特性篩選，
+整體效能表現排序如表\ref{t:dis-ambi-overall-no-nbc} 所示，
+可以看出加入實體類型資訊再搭配篩選門檻為0.5的開選策略後的整體效能表現較佳，
+篩選門檻為0.5時，使用歧義度不大於4的樣式會有最好的效果。
+
+使用簡單貝氏分類器後的表現排序則如表\ref{t:dis-ambi-overall-nbc} 所示，
+排名前4都是使用高歧義度的樣式，使召回率相對較高，
+簡單貝氏分類器主要大幅提升了精確率。
+而篩選策略(4)是全選，相較於精確率更偏好召回率，
+在表中的排名1、2之間也反映了這種傾向。
+
+\begin{table}
+    \caption{樣式篩選與特性消歧義整體效能表現（無分類器，宏觀平均）}
+    \label{t:dis-ambi-overall-no-nbc}
+    \footnotesize
+    \begin{center}
+        \begin{tabular}{|l||c|c||c|c||c|c|c|}
+            \hline
+            排名 & 信心值門檻 & 歧義度 & 類型資訊 & 篩選策略 & Precision & Recall & $F_1$ Score \\
+            \hline
+            1 & 0 & $\leq$4 & 有 & (2) & 0.1927 & 0.5986 & 0.2915 \\
+            2 & 0 & $\leq$5 & 有 & (2) & 0.1896 & 0.6137 & 0.2898 \\
+            3 & 0 & $\leq$3 & 有 & (2) & 0.1923 & 0.5869 & 0.2897 \\
+            4 & 0 & $\leq$2 & 有 & (2) & 0.1954 & 0.5590 & 0.2896 \\
+            5 & 0 & $\leq$4 & 有 & (3) & 0.1934 & 0.5750 & 0.2894 \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\begin{table}
+    \caption{樣式篩選與特性消歧義整體效能表現（宏觀平均）}
+    \label{t:dis-ambi-overall-nbc}
+    \footnotesize
+    \begin{center}
+        \begin{tabular}{|l||c|c||c|c|c||c|c|c|}
+            \hline
+            排名 & 信心值門檻 & 歧義度 & 類型資訊 & 篩選策略 & 分類器 & Precision & Recall & $F_1$ Score \\
+            \hline
+            1 & 0 & $\leq$5 & 有 & (4) & 有 & 0.4266 & 0.3531 & 0.3864 \\
+            2 & 0 & $\leq$5 & 有 & (2) & 有 & 0.4474 & 0.3387 & 0.3856 \\
+            3 & 0 & $\leq$5 & 有 & (1) & 有 & 0.4321 & 0.3457 & 0.3841 \\
+            4 & 0 & $\leq$5 & 有 & (3) & 有 & 0.4447 & 0.3312 & 0.3796 \\
+            5 & 0 & $\leq$4 & 有 & (4) & 有 & 0.4230 & 0.3423 & 0.3784 \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
 \subsection{錯誤分析}
 
 在整個過程我們分析了錯誤可能的來源，
@@ -343,7 +427,7 @@ False Postive的成因基本上可以分成兩類：
 由於大部分實驗中的精確率相較於召回率偏低，
 因此我們又分析了影響精確率的False Postive的成因所佔的比例。
 圖\ref{i:error} 分析了使用分類器前後個特性的False Postive中的成分，
-發現大部分False Postive的來源皆屬於第二類。
+發現大部分False Postive的來源皆屬於第二類樣式出現但不具有特性。
 圖中的黑、白線條就是使用分類器前後第二類錯誤佔所有False Postive中的比例。
 使用了分類器後第二類除了部份特性如hasAcademicAdvisor之外，
 雖然所佔比例有所下降，但仍然是最主要的錯誤來源，
