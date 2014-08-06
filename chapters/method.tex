@@ -319,7 +319,7 @@ isCitizenOf有8次、livesIn有6次、isLeaderOf有2次，換算可信賴度分�
 當某個描述特定的實體特性的樣式出現時可能會伴隨出現一些固定的字詞。
 如果沒有那些字詞伴隨出現，有可能是與實體特性無關的句子。
 
-例如，dealsWith是國家與國家間締約的特性，
+例如，dealsWith是指國家與國家間締約的特性，
 其中樣式「divided into」若用來描述dealsWith，
 前後文就常會出現一些國家名、行政區之類的詞彙等。
 又例如holdsPoliticalPosition的樣式出現時，
@@ -344,7 +344,7 @@ isCitizenOf、livesIn、isLeaderOf等5種特性；
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{images/03-tagging}
+    \includegraphics[width=\textwidth]{images/03-tagging}
     \caption{標記句子流程}
     \label{i:tagging}
 \end{figure}
@@ -354,7 +354,7 @@ isCitizenOf、livesIn、isLeaderOf等5種特性；
 代表這個句子不包含該實體分類。
 對於每個實體特性，我們以分類中的句子所出現過的詞作為特徵，
 正、負向標記的詞頻作為特徵值，
-訓練了一個二元的簡單貝氏分類器\footnote{訓練的過程與http://nlp.stanford.edu/IR-book/html/htmledition/naive-bayes-text-classification-1.html內的演算法一樣。}（Na\"{\i}ve Bayes Classifier），
+訓練了一個二元的簡單貝氏分類器\footnote{與http://nlp.stanford.edu/IR-book/html/htmledition/naive-bayes-text-classification-1.html內的演算法相同。}（Na\"{\i}ve Bayes Classifier），
 用來區分是正向，也就是有包含實體特性的句子，
 是負向，也就是不包含實體特性的句子。
 

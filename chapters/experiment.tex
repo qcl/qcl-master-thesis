@@ -157,16 +157,16 @@ $F_1$分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1
 我們利用PATTY提供的信心值進行樣式的篩選，選定了門檻值分別為0（沒有門檻）、0.7、0.8與0.9，
 只使用樣式信心值大於門檻值的樣式進行偵測實驗，其結果的宏觀平均與微觀平均$F_1$分數如圖\ref{i:conf-f1} 所示。
 
-\begin{figure}[h]
+\begin{figure}
     \centering
-    \includegraphics[width=0.85\textwidth]{images/04-conf-f1}
+    \includegraphics[width=0.7\textwidth]{images/04-conf-f1}
     \caption{無歧義度下F1分數平均隨信心值變化圖}
     \label{i:conf-f1}
 \end{figure}
 
 就整體效能而言，設定信心值門檻值並沒有辦法提升系統效能，反而使效能變差。
 這是由於設定門檻值後，通過門檻值的樣式數量減少，導致召回率下降太多，
-到門檻值為0.9時，有部分的特性（hasCapital, isKnownFor）已經沒有可用的樣式。
+到門檻值為0.9時，有部分的特性（hasCapital、isKnownFor）已經沒有可用的樣式。
 但部分的特性$F_1$分數因精確率比較大幅度的提升而略微上升，表\ref{t:confidence} 中，
 信心值門檻由0.8昇至0.9，
 特性actedIn、created、diedIn、hasAcademicAdvisor、holdsPoliticalPosition、influences、isMarriedTo等的精確率皆有較大幅度的提升。
@@ -188,7 +188,7 @@ $F_1$分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.85\textwidth]{images/04-reliability-f1}
+    \includegraphics[width=0.7\textwidth]{images/04-reliability-f1}
     \caption{無歧義度下F1分數平均隨可信賴度變化圖}
     \label{i:reliability-f1}
 \end{figure}
@@ -207,7 +207,7 @@ $F_1$分數則是綜合評估精確率與召回率，計算方式如式\ref{f:f1
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.85\textwidth]{images/04-degree}
+    \includegraphics[width=0.7\textwidth]{images/04-degree}
     \caption{F1分數與召回率隨歧義度變化圖}
     \label{i:degree}
 \end{figure}
@@ -269,7 +269,7 @@ actedIn的False Postive從13,560降至489、happendIn的False Postive從1,567降
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.85\textwidth]{images/04-type}
+    \includegraphics[width=0.7\textwidth]{images/04-type}
     \caption{加入實體類型資訊前後效能比較}
     \label{i:type}
 \end{figure}
@@ -286,23 +286,23 @@ actedIn的False Postive從13,560降至489、happendIn的False Postive從1,567降
 (1)選擇正確率最高的特性，
 (2)與(3)將可信賴度正規化後，選擇門檻值以上之特性。
 
+圖\ref{i:macro-nol}、\ref{i:micro-nol} 呈現實驗結果，
+(1)只選擇了一個忽略了可能有複數個特性存在，
+(4)全選則太寬鬆，以至於精確率降太多。
+
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.85\textwidth]{images/04-macro-nol}
+    \includegraphics[width=0.7\textwidth]{images/04-macro-nol}
     \caption{不同歧義度下篩選策略效能表現（宏觀平均）}
     \label{i:macro-nol}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}
     \centering
-    \includegraphics[width=0.85\textwidth]{images/04-micro-nol}
+    \includegraphics[width=0.7\textwidth]{images/04-micro-nol}
     \caption{不同歧義度下篩選策略效能表現（微觀平均）}
     \label{i:micro-nol}
 \end{figure}
-
-圖\ref{i:macro-nol}、\ref{i:micro-nol} 呈現實驗結果，
-(1)只選擇了一個忽略了可能有複數個特性存在，
-(4)全選則太寬鬆，以至於精確率降太多。
 
 由巨觀平均的角度來看，
 在使用任何歧義度之樣式的情況下，
@@ -324,7 +324,7 @@ False Postive也隨之減少，
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.85\textwidth]{images/04-nbc}
+    \includegraphics[width=0.7\textwidth]{images/04-nbc}
     \caption{使用簡單貝氏分類器前後效能比較}
     \label{i:nbc}
 \end{figure}
@@ -335,12 +335,12 @@ False Postive也隨之減少，
 圖\ref{i:nbc} 顯示了使用簡單貝氏分類器對不同歧義度的效能比較。
 而表\ref{t:nbc} 則是歧義度不小於5、使用實體類型資訊、樣式篩選門檻0.5時有無使用分類器的效能比較。
 
-圖\ref{i:nbc} 與表\ref{t:nbc} 中可以看到使用了分類器後整體的效能有了大幅度的提升，
+圖\ref{i:nbc} 與表\ref{t:nbc} 中可以看到使用了簡單貝氏分類器後整體的效能有了大幅度的提升。
 從個別特性來看，
 大多數的特性如created、dealsWith、diedIn、directed、graduatedFrom、
 happendIn、hasAcademicAdvisor、hasCapital、hasChild、hasWonPrize、
 holdsPoliticalPosition、influences、isCitizenOf、isMarriedTo、
-livesIn、participatedIn、playsFor、worksA等的精確度都有了大幅的提升。
+livesIn、participatedIn、playsFor、worksAt等的精確度都有了大幅的提升。
 但這些精確度的增加主要並非來自True Postive的提升，
 而是False Postive的大幅下降，事實上True Postive的數量也減少了，而使得False Negative上升，因此精確率大幅提升但召回率下降。
 例如diedIn的False Postive由10,299降低至1,344，True Postive由1,276降至850，而False Negative則是由1.032升至1,458。
