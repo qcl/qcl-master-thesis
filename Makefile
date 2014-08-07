@@ -3,6 +3,7 @@ LIBVERSION=thesis-lib
 LATEX=xelatex
 BIBTEX=bibtex
 RM=rm -f
+PDF_PWD=r01922024
 
 .SUFFIXES: .tex
 
@@ -15,7 +16,7 @@ $(MAIN).pdf: *.tex chapters/*.tex ntuthesis.cls thesis.bib images/* tables/*.tex
 	$(BIBTEX) $(MAIN)
 	$(LATEX) $(MAIN)
 	$(LATEX) $(MAIN)
-	rm watermark.tex
+	$(RM) watermark.tex
 
 ntulib: *.tex chapters/*.tex ntuthesis.cls thesis.bib images/* tables/*.tex
 	cp with-watermark.tex watermark.tex
@@ -23,9 +24,9 @@ ntulib: *.tex chapters/*.tex ntuthesis.cls thesis.bib images/* tables/*.tex
 	$(BIBTEX) $(MAIN)
 	$(LATEX) $(MAIN)
 	$(LATEX) $(MAIN)
-	mv $(MAIN).pdf $(LIBVERSION).pdf
+	pdftk $(MAIN).pdf output $(LIBVERSION).pdf owner_pw $(PDF_PWD) allow Printing allow ScreenReaders
 	cp $(LIBVERSION).pdf ~/Dropbox/102-2/Research/
-	rm watermark.tex
+	$(RM) watermark.tex $(MAIN).pdf
 
 clean:
 	$(RM) *.log *.aux *.dvi *.lof *.lot *.toc *.bbl *.blg
