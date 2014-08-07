@@ -137,28 +137,24 @@
 \begin{document}
 
 % 臺大論文浮水印
-%\CenterWallPaper{0.174}{pdfs/watermark.pdf}
-%\setlength{\wpXoffset}{6.1725cm}
-%\setlength{\wpYoffset}{10.5225cm}
+\input{watermark.tex}
 
 \frontmatter
 
 \makecover
-%\makespine % TODO
 
-% 口試委員會審定書 TODO 
+% 口試委員會審定書  
 % 以 \makecertification 產生
 %\makecertification
 % 或匯入外部.pdf檔
-%\addcontentsline{toc}{chapter}{口試委員會審定書}
-%\includepdf[pages={1}]{pdfs/cert.pdf}
+\addcontentsline{toc}{chapter}{口試委員會審定書}
+\includepdf[pages={1}]{pdfs/cert.pdf}
 
-% 誌謝 TODO
-%\input{acknowledgements}
+% 誌謝
+\input{acknowledgements}
 % 摘要
 \input{abstract}
 
-% TODO FIXME - Chinese Chapter Wording setting
 % Table of Content
 \clearpage
 \tableofcontents
