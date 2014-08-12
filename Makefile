@@ -10,7 +10,7 @@ PDF_PWD=r01922024
 all: $(MAIN).pdf
 	cp $(MAIN).pdf ~/Dropbox/102-2/Research/
 
-$(MAIN).pdf: *.tex chapters/*.tex ntuthesis.cls thesis.bib images/* tables/*.tex
+$(MAIN).pdf: files
 	cp without-watermark.tex watermark.tex
 	$(LATEX) $(MAIN)
 	$(BIBTEX) $(MAIN)
@@ -18,7 +18,7 @@ $(MAIN).pdf: *.tex chapters/*.tex ntuthesis.cls thesis.bib images/* tables/*.tex
 	$(LATEX) $(MAIN)
 	$(RM) watermark.tex
 
-ntulib: *.tex chapters/*.tex ntuthesis.cls thesis.bib images/* tables/*.tex
+ntulib: files
 	cp with-watermark.tex watermark.tex
 	$(LATEX) $(MAIN)
 	$(BIBTEX) $(MAIN)
@@ -27,6 +27,8 @@ ntulib: *.tex chapters/*.tex ntuthesis.cls thesis.bib images/* tables/*.tex
 	pdftk $(MAIN).pdf output $(LIBVERSION).pdf owner_pw $(PDF_PWD) allow Printing allow ScreenReaders
 	cp $(LIBVERSION).pdf ~/Dropbox/102-2/Research/
 	$(RM) watermark.tex $(MAIN).pdf
+
+files: *.tex chapters/*.tex ntuthesis.cls thesis.bib images/* tables/*.tex
 
 clean:
 	$(RM) *.log *.aux *.dvi *.lof *.lot *.toc *.bbl *.blg
