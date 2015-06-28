@@ -1,11 +1,2 @@
-*.log
-*.aux
-*.dvi
-*.lof
-*.lot
-*.toc
-*.bbl
-*.blg
-*.pdf
 *~
 *.swp
