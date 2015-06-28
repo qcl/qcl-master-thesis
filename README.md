@@ -35,3 +35,8 @@ Thanks @cwahbong tolds me how to use pdftk.
 ### Windows
 
 * 留下字形檔案，下載[Ubuntu](http://www.ubuntu.com/)並安裝或找一台[蘋果電腦](http://www.apple.com/tw/mac/)。
+* （上面開玩笑的，有知道如何在Windows上使用的還請告知，感恩）
+
+## Result
+
+* Please checout `release` branch, thanks.
