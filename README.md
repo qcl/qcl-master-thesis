@@ -34,8 +34,17 @@ Thanks @cwahbong tolds me how to use pdftk.
 
 ### Windows
 
-* 留下字形檔案，下載[Ubuntu](http://www.ubuntu.com/)並安裝或找一台[蘋果電腦](http://www.apple.com/tw/mac/)。
-* （上面開玩笑的，有知道如何在Windows上使用的還請告知，感恩）
+* 安裝[Cygwin](https://cygwin.com/)
+* 安裝Cygwin套件 make texlive texlive-collection-xetex texlive-collection-latexrecommended texlive-collection-latexextra texlive-collection-bibtexextra texlive-collection-science texlive-collection-fontsrecommended pdftk
+* 開啟Cygwin Terminal
+* 安裝字形（標楷體、Times New Roman）
+    * ln -s /cygdrive/[WINDOWS]/Windows/Fonts/ /usr/share/fonts/win
+    * fc-cache
+    * fc-list //for check
+* 編譯
+    * make
+* 編譯送圖書館版本（加上浮水印、保全）
+    * make ntulib
 
 ## Result
 
